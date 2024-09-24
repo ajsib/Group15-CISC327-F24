@@ -1,0 +1,32 @@
+/* styles/base/_colors.css */
+
+/* Light Mode Color Palette */
+:root {
+  --color-primary: #1b3a6b; /* Navy Blue - Trust and Reliability */
+  --color-secondary: #ff5a36; /* Coral Orange - Energy and Enthusiasm */
+  --color-accent: #f4a261; /* Light Orange Accent */
+  --color-background: #f0f4f8; /* Light Blue-Grey Background */
+  --color-component-bg: #ffffff; /* White Component Background */
+  --color-text: #1f2937; /* Dark Blue-Grey Text Color */
+  --color-muted: #4b5563; /* Muted Blue-Grey Text Color */
+  --color-border: #d1d5db; /* Light Gray Border Color */
+  --color-link: #006db3; /* Bright Blue Link */
+  --color-visited-link: #004080; /* Darker Blue Visited Link */
+}
+
+
+/* Dark Mode Color Palette */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #8ab4f8; /* Light Blue for Night Mode */
+    --color-secondary: #ff6b5e; /* Soft Coral for Night Mode */
+    --color-accent: #ff8b7c; /* Light Coral Accent */
+    --color-background: #1e293b; /* Deep Blue-Grey Background */
+    --color-component-bg: #2d3748; /* Darker Blue-Grey Component Background */
+    --color-text: #f1f5f9; /* Light Text Color */
+    --color-muted: #a0aec0; /* Muted Light Blue-Grey Color */
+    --color-border: #4a5568; /* Dark Gray Border Color */
+    --color-link: #a3bffa; /* Soft Blue Link */
+    --color-visited-link: #899bff; /* Soft Violet Visited Link */
+  }
+}
