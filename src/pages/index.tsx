@@ -1,79 +1,74 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { GetServerSideProps } from 'next'; // Importing Next.js type for server-side rendering
+import { GetServerSideProps } from 'next';
+import Link from 'next/link';
+import Header from '../components/Header'; // Import Header component
+import WelcomeMessage from '../components/WelcomeMessage';
+import CallToActionButton from '../components/CallToActionButton';
 
-// Define a simple interface for the welcome message
-// This interface ensures that the props `welcomeMessage` and `username` are passed in as strings
-interface WelcomeProps {
-  welcomeMessage: string; // Message to be displayed as a heading
-  username: string; // Username to be displayed in the paragraph
-}
-
-// CSS styles using Emotion
-// We're using `css` from `@emotion/react` to define styles for the page.
-// These styles are scoped to the component and will be applied as a `css` prop.
+// CSS for the overall page layout
 const welcomePageStyles = css`
-  display: flex; /* Flexbox layout for centering */
-  flex-direction: column; /* Align items vertically */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  height: 100vh; /* Full height of the viewport */
-  background-color: #f5f5f5; /* Light grey background color */
-  font-family: Arial, sans-serif; /* Font for the page */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f8ff; /* Light blue background */
+  padding-top: 60px; /* Add space for the header */
+`;
 
-  h1 {
-    color: #333; /* Dark grey color for the heading */
-    font-size: 3rem; /* Large font size for the heading */
-    margin-bottom: 20px; /* Spacing between the heading and paragraph */
-  }
+// CSS for the Hangman button
+const hangmanButtonStyles = css`
+  margin-top: 20px;
+  background-color: #ff6347; /* Tomato color for the button */
+  color: white;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-  p {
-    font-size: 1.5rem; /* Medium font size for the paragraph */
-    color: #666; /* Medium grey color for the paragraph */
-  }
-
-  /* Class for the username part inside the paragraph */
-  .username {
-    font-weight: bold; /* Make the username bold */
-    color: #0070f3; /* Blue color for the username (Next.js brand color) */
+  &:hover {
+    background-color: #e5533d; /* Darker red on hover */
   }
 `;
 
-// Main functional component for the Welcome Page
-// This component accepts `welcomeMessage` and `username` as props, which are passed down from `getServerSideProps`.
-const WelcomePage = ({ welcomeMessage, username }: WelcomeProps) => {
+// Main functional component for the landing page
+const WelcomePage = ({ welcomeMessage, username }: { welcomeMessage: string; username: string }) => {
   return (
-    // Apply the defined CSS styles to this div using Emotion's `css` prop
-    <div css={welcomePageStyles}>
-      {/* Display the welcome message as the heading */}
-      <h1>{welcomeMessage}</h1>
+    <>
+      <Header /> {/* Add the Header component */}
 
-      {/* Display a welcome message with the username */}
-      <p>
-        Welcome, <span className="username">{username}</span>!
-      </p>
-    </div>
+      <div css={welcomePageStyles}>
+        {/* Display the welcome message and username */}
+        <WelcomeMessage welcomeMessage={welcomeMessage} username={username} />
+
+        {/* Button to navigate to the flights page */}
+        <CallToActionButton />
+
+        {/* Add a button to navigate to the Hangman game (index2.tsx) */}
+        <Link href="/test" passHref>
+          <button css={hangmanButtonStyles}>
+            Play Hangman
+          </button>
+        </Link>
+      </div>
+    </>
   );
 };
 
 // Server-side rendering to provide props to the page
-// `getServerSideProps` runs on each request to fetch or generate the required data for rendering the page.
 export const getServerSideProps: GetServerSideProps = async () => {
-  // Fetch or generate the data needed for the welcome page
-  // This could be an API call, database query, or static value.
-  const welcomeMessage = 'Hello and Welcome to Our Website'; // Static message
-  const username = 'John Doe'; // Static username, can be dynamically fetched
+  const welcomeMessage = 'Welcome to the Flight Booking App';
+  const username = 'Guest'; // Static username for now, can be fetched dynamically
 
-  // Return the props for the component
-  // These props will be passed to the `WelcomePage` component during rendering.
   return {
     props: {
-      welcomeMessage, // Passing the welcome message to the component
-      username, // Passing the username to the component
+      welcomeMessage,
+      username,
     },
   };
 };
 
-// Export the default component for this page
-// This is the main component that Next.js will render for this route.
 export default WelcomePage;

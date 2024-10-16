@@ -1,0 +1,8 @@
+# Handle all text files automatically (normalizes all line endings)
+* text=auto
+
+# Specific file types (e.g., shell scripts should always use LF)
+*.sh text eol=lf
+
+# Windows batch files should always use CRLF
+*.bat text eol=crlf
