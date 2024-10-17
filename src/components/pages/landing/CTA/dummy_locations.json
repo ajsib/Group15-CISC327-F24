@@ -1,0 +1,33 @@
+[
+    {
+      "code": "JFK",
+      "city": "New York",
+      "country": "USA",
+      "airport": "John F. Kennedy International Airport"
+    },
+    {
+      "code": "LAX",
+      "city": "Los Angeles",
+      "country": "USA",
+      "airport": "Los Angeles International Airport"
+    },
+    {
+      "code": "LHR",
+      "city": "London",
+      "country": "UK",
+      "airport": "London Heathrow Airport"
+    },
+    {
+      "code": "CDG",
+      "city": "Paris",
+      "country": "France",
+      "airport": "Charles de Gaulle Airport"
+    },
+    {
+      "code": "HND",
+      "city": "Tokyo",
+      "country": "Japan",
+      "airport": "Tokyo Haneda Airport"
+    }
+  ]
+  
