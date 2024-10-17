@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import Header from '../components/Header'; // Import Header component
+import Header from '../components/header'; // Import Header component
 import WelcomeMessage from '../components/WelcomeMessage';
 import CallToActionButton from '../components/CallToActionButton';
 
@@ -17,8 +17,8 @@ const welcomePageStyles = css`
   padding-top: 60px; /* Add space for the header */
 `;
 
-// CSS for the Hangman button
-const hangmanButtonStyles = css`
+// CSS for the Hangman button and Landing Page button
+const buttonStyles = css`
   margin-top: 20px;
   background-color: #ff6347; /* Tomato color for the button */
   color: white;
@@ -49,8 +49,15 @@ const WelcomePage = ({ welcomeMessage, username }: { welcomeMessage: string; use
 
         {/* Add a button to navigate to the Hangman game (index2.tsx) */}
         <Link href="/test" passHref>
-          <button css={hangmanButtonStyles}>
+          <button css={buttonStyles}>
             Play Hangman
+          </button>
+        </Link>
+
+        {/* Add a button to navigate to the landing page */}
+        <Link href="/landingpage" passHref>
+          <button css={buttonStyles}>
+            Go to Landing Page
           </button>
         </Link>
       </div>
