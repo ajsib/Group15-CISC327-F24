@@ -41,10 +41,6 @@ const flightInfoStyle = css`
   background-color: #eeeeee;
   margin-bottom: 1rem;
   border-radius: 8px;
-
-  h2, p, span {
-    color: black; /* Small text explicitly set to black */
-  }
 `;
 
 const datePickerStyle = css`
@@ -58,7 +54,7 @@ const datePickerStyle = css`
     border: 1px solid #ccc;
     padding: 0.75rem 1.5rem;
     cursor: pointer;
-    color: black; /* Ensure button text is black */
+    color: black;
 
     &.active {
       font-weight: bold;
@@ -75,10 +71,6 @@ const flightListStyle = css`
   background-color: white;
   padding: 1rem;
   border-radius: 8px;
-
-  h3, p, span {
-    color: black; /* All small texts are black */
-  }
 `;
 
 const flightRowStyle = css`
@@ -109,7 +101,6 @@ const loadMoreStyle = css`
     padding: 0.75rem 1.5rem;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.3s;
 
     &:hover {
       background-color: #005bb5;
@@ -119,10 +110,7 @@ const loadMoreStyle = css`
 
 const FlightSearchResultsPage = () => {
   const router = useRouter();
-  const { date } = router.query;
-
-  const [selectedDate, setSelectedDate] = useState<string>(date as string || '2024-09-30');
-  const [flights, setFlights] = useState<Flight[]>([]);
+  const { origin, destination, departureDate, returnDate, adults, children, seniors, oneWay } = router.query;
 
   const flightData: FlightData = {
     '2024-09-29': [
@@ -138,14 +126,11 @@ const FlightSearchResultsPage = () => {
     ],
   };
 
-  useEffect(() => {
-    setFlights(flightData[selectedDate] || []);
-  }, [selectedDate]);
+  const [flights, setFlights] = useState<Flight[]>(flightData['2024-09-30'] || []);
 
-  const handleDateChange = (newDate: string) => {
-    setSelectedDate(newDate);
-    router.push(`/search-results?date=${newDate}`, undefined, { shallow: true });
-  };
+  useEffect(() => {
+    setFlights(flightData[departureDate as string] || []);
+  }, [departureDate]);
 
   return (
     <div css={containerStyle}>
@@ -156,23 +141,13 @@ const FlightSearchResultsPage = () => {
 
       <div css={flightInfoStyle}>
         <h2>Select Departing Flight</h2>
-        <p>Toronto YYZ to Ottawa YOW | {selectedDate}</p>
-      </div>
-
-      <div css={datePickerStyle}>
-        {Object.keys(flightData).map((d) => (
-          <button
-            key={d}
-            className={d === selectedDate ? 'active' : ''}
-            onClick={() => handleDateChange(d)}
-          >
-            {d}
-          </button>
-        ))}
+        <p>{origin} to {destination} | Departure: {departureDate}</p>
+        {returnDate && <p>Return: {returnDate}</p>}
+        <p>Passengers: {adults} Adult(s), {children} Child(ren), {seniors} Senior(s)</p>
       </div>
 
       <div css={flightListStyle}>
-        <h3>Economy</h3>
+        <h3>Available Flights</h3>
         {flights.length > 0 ? (
           flights.map((flight) => (
             <div key={flight.id} css={flightRowStyle}>
