@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import Image from 'next/image';
+import { Airplane } from 'phosphor-react';
 
 // CSS styles
 const heroContainerStyle = css`
@@ -9,7 +10,7 @@ const heroContainerStyle = css`
   height: 30vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   text-align: center;
   background-color: #000; /* Fallback for background image */
@@ -40,26 +41,24 @@ const contentStyle = css`
   z-index: 3;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  height: 100%;
-  color: #fff;
-  padding: 40px 20px;
+  color: #fff; /* Ensure text is white */
 `;
 
 const titleStyle = css`
   font-size: 3rem;
   font-weight: bold;
+  color: #fff; /* Ensure title is white */
 `;
 
 const iconStyle = css`
-  font-size: 4rem;
-  margin: 20px 0;
+  color: #fff; /* Ensure icon is white */
 `;
 
 const subtitleStyle = css`
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+  font-size: 1.3rem;
+  color: #fff; /* Ensure subtitle is white */
 `;
 
 export default function Hero() {
@@ -67,7 +66,7 @@ export default function Hero() {
     <section css={heroContainerStyle}>
       {/* Background image */}
       <Image
-        src="/images/banner.jpeg"
+        src="/images/banner.jpg"
         alt="Hero background"
         layout="fill"
         css={heroImageStyle}
@@ -80,6 +79,7 @@ export default function Hero() {
       {/* Content */}
       <div css={contentStyle}>
         <h1 css={titleStyle}>Your Airline Name</h1>
+        <Airplane css={iconStyle} size={64} weight="bold" />
         <p css={subtitleStyle}>Find your next dream destination</p>
       </div>
     </section>
