@@ -40,12 +40,18 @@ const searchFormStyles = css`
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f7f7f7;
+    color: black; /* Ensure the text color is black in the input fields */
+  }
+
+  select option {
+    color: black; /* Ensure the dropdown options text is black */
   }
 
   .full-width {
     grid-column: span 2;
   }
 `;
+
 
 const passengersSelectStyle = css`
   display: grid;
@@ -91,11 +97,12 @@ export default function CTA() {
   return (
     <div css={pageContainerStyles}>
       <div css={searchFormStyles}>
-        {/* Origin and Destination */}
+        {/* Origin and Destination (Dropdown with live filtering) */}
         <div className="search-form-left">
           <DropdownSelect label="Origin" id="origin" onSelect={setOrigin} />
           <DropdownSelect label="Destination" id="destination" onSelect={setDestination} />
         </div>
+
 
         {/* Dates and Passenger Information */}
         <div className="search-form-right">

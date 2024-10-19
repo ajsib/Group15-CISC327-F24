@@ -1,98 +1,108 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import locations from './dummy_locations.json'; // Assuming this JSON file is at this relative path
 
-interface Location {
-  code: string;
-  city: string;
-  country: string;
-  airport: string;
-}
-
-const inputStyles = css`
-  position: relative;
+const dropdownStyles = css`
   width: 100%;
+  position: relative;
+
   input {
+    width: 100%;
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f7f7f7;
+    color: black; /* Text inside input field */
   }
-`;
 
-const suggestionsStyles = css`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 1000;
+  .dropdown-menu {
+    position: absolute;
+    width: 100%;
+    background-color: white; /* Background of dropdown list */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
 
-  li {
+  .dropdown-item {
     padding: 10px;
+    font-size: 1rem;
     cursor: pointer;
+    color: black; /* Text color of dropdown items */
+    background-color: white; /* Ensure background is white */
 
     &:hover {
-      background-color: #f7f7f7;
+      background-color: #f0f0f0; /* Hover effect for better UI */
     }
   }
 `;
 
-interface DropdownSelectProps {
+export default function DropdownSelect({
+  label,
+  id,
+  onSelect,
+}: {
   label: string;
   id: string;
-  onSelect: (value: string) => void;
-}
+  onSelect: (option: string) => void;
+}) {
+  const [searchTerm, setSearchTerm] = useState<string>(''); // Ensure the type is string
+  const [filteredOptions, setFilteredOptions] = useState<string[]>([]); // Ensure filteredOptions is an array of strings
 
-export default function DropdownSelect({ label, id, onSelect }: DropdownSelectProps) {
-  const [inputValue, setInputValue] = useState('');
-  const [filteredSuggestions, setFilteredSuggestions] = useState<Location[]>([]);
+  const options: string[] = [
+    'New York',
+    'Los Angeles',
+    'London',
+    'Paris',
+    'Tokyo',
+    'Toronto',
+    'Dubai',
+    'Sydney',
+    'Frankfurt',
+    'Mumbai',
+  ]; // Example options
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    setInputValue(query);
+    const value = e.target.value;
+    setSearchTerm(value);
 
-    if (query.length > 1) {
-      const filtered = locations.filter(location =>
-        location.city.toLowerCase().includes(query.toLowerCase()) ||
-        location.code.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredSuggestions(filtered);
-    } else {
-      setFilteredSuggestions([]);
-    }
-  };
-
-  const handleSelect = (location: Location) => {
-    setInputValue(`${location.city} (${location.code})`);
-    setFilteredSuggestions([]);
-    onSelect(location.code);
+    // Live filtering of the options
+    setFilteredOptions(
+      options.filter((option) =>
+        option.toLowerCase().includes(value.toLowerCase())
+      )
+    );
   };
 
   return (
-    <div css={inputStyles}>
+    <div css={dropdownStyles}>
       <label htmlFor={id}>{label}</label>
       <input
         type="text"
         id={id}
-        value={inputValue}
+        value={searchTerm}
         onChange={handleInputChange}
-        placeholder={label}
+        placeholder={`Enter ${label}`}
       />
-      {filteredSuggestions.length > 0 && (
-        <ul css={suggestionsStyles}>
-          {filteredSuggestions.map((location, index) => (
-            <li key={index} onClick={() => handleSelect(location)}>
-              {location.city} ({location.code}) - {location.airport}
-            </li>
+      {filteredOptions.length > 0 && (
+        <div className="dropdown-menu">
+          {filteredOptions.map((option, index) => (
+            <div
+              key={index}
+              className="dropdown-item"
+              onClick={() => {
+                onSelect(option);
+                setSearchTerm(option); // Set the selected option in the input
+                setFilteredOptions([]); // Clear the dropdown after selection
+              }}
+            >
+              {option}
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

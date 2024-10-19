@@ -1,0 +1,11 @@
+[
+    { "code": "JFK", "name": "John F. Kennedy International Airport", "city": "New York" },
+    { "code": "LAX", "name": "Los Angeles International Airport", "city": "Los Angeles" },
+    { "code": "ORD", "name": "O'Hare International Airport", "city": "Chicago" },
+    { "code": "SFO", "name": "San Francisco International Airport", "city": "San Francisco" },
+    { "code": "MIA", "name": "Miami International Airport", "city": "Miami" },
+    { "code": "YVR", "name": "Vancouver International Airport", "city": "Vancouver" },
+    { "code": "YYZ", "name": "Toronto Pearson International Airport", "city": "Toronto" },
+    { "code": "ATL", "name": "Hartsfield-Jackson Atlanta International Airport", "city": "Atlanta" }
+  ]
+  
