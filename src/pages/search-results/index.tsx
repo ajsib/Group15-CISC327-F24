@@ -1,10 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { css } from '@emotion/react';
 import SearchResultsHeader from '../../components/pages/search-results/SearchResultsHeader';
 import FlightCard from '../../components/pages/search-results/FlightCard';
 import PaginationControls from '../../components/pages/search-results/PaginationControls';
 // import FiltersSidebar from '../../components/pages/search-results/FiltersSidebar'; // Uncomment if using
+
+// Define the Flight type
+interface Flight {
+  id: number;
+  origin: string;
+  destination: string;
+  date: string;
+}
 
 const pageContainerStyles = css`
   font-family: Arial, sans-serif;
@@ -19,24 +27,30 @@ const resultsStyles = css`
   padding: 20px;
 `;
 
-const sampleFlights = [
-  { id: 1, origin: 'New York', destination: 'Los Angeles', date: '2024-10-22' },
-  { id: 2, origin: 'Toronto', destination: 'Vancouver', date: '2024-11-05' },
-  // Add more sample flights
-];
-
 const SearchResultsPage = () => {
+  const [flights, setFlights] = useState<Flight[]>([]); // Explicitly setting Flight[] as the type
   const [currentPage, setCurrentPage] = useState(1);
   const flightsPerPage = 10;
-  const totalPages = Math.ceil(sampleFlights.length / flightsPerPage);
+  const totalPages = Math.ceil(flights.length / flightsPerPage);
 
   const indexOfLastFlight = currentPage * flightsPerPage;
   const indexOfFirstFlight = indexOfLastFlight - flightsPerPage;
-  const currentFlights = sampleFlights.slice(indexOfFirstFlight, indexOfLastFlight);
+  const currentFlights = flights.slice(indexOfFirstFlight, indexOfLastFlight);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  // Load the flight data from the JSON file on component mount
+  useEffect(() => {
+    const fetchFlights = async () => {
+      const res = await fetch('/components/pages/search-results/flights.json');
+      const data: Flight[] = await res.json(); // Telling TypeScript that data will be an array of Flight
+      setFlights(data);
+    };
+
+    fetchFlights();
+  }, []);
 
   return (
     <div css={pageContainerStyles}>
