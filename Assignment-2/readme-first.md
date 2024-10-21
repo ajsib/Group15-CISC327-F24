@@ -45,9 +45,9 @@ This project is a **Flight Booking Application** built using **Next.js** and **R
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-
+```bash
+    git clone <repository-url>
+```
 2. Navigate to the project directory:
 ```bash
    cd <project-directory>
