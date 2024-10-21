@@ -3,17 +3,29 @@ import { css } from '@emotion/react';
 import CTA from '../components/pages/landing/CTA';
 import Hero from '../components/pages/landing/Hero';
 
-const containerStyle = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const containerStyles = css`
+  position: relative;
+  overflow: hidden; /* Prevents scrolling */
+  height: 100vh; /* Ensures it takes up the full viewport height */
+`;
+
+const ctaContainerStyles = css`
+  position: absolute;
+  top: 45%; /* Adjust this to move it down */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Ensure it's on top of the content */
+  width: 100%;
+  max-width: 800px;
 `;
 
 export default function HomePage() {
   return (
-    <div css={containerStyle}>
+    <div css={containerStyles}>
       <Hero />
-      <CTA />
+      <div css={ctaContainerStyles}>
+        <CTA />
+      </div>
     </div>
   );
 }

@@ -2,164 +2,214 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import PassSelect from './PassSelect';
 import DropdownSelect from './DropdownSelect';
 
-const pageContainerStyles = css`
+const ticketContainerStyles = css`
+  max-width: 800px;
+  background-color: var(--color-component-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+`;
+
+const sectionStyles = css`
+  flex: 1;
+`;
+
+const dividerStyles = css`
+  width: 1px;
+  background-color: var(--color-border);
+  margin: 0 16px;
+`;
+
+const originDestinationStyles = css`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-top: 60px;
-  font-family: Arial, sans-serif;
+  gap: 16px;
 `;
 
-const searchFormStyles = css`
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  grid-gap: 20px;
-  align-items: center;
-  width: 80%;
+const datesPassengersStyles = css`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
 
-  .search-form-left {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 20px;
+const dateGroupStyles = css`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+
+  .date-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: var(--color-muted);
+    }
+
+    input[type='date'] {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+    }
   }
+`;
 
-  .search-form-right {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
+const passengerOneWayStyles = css`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+
+  .checkbox-group {
+    display: flex;
     align-items: center;
+    gap: 8px;
+
+    input[type='checkbox'] {
+      width: 16px;
+      height: 16px;
+    }
+
+    label {
+      font-size: 14px;
+    }
   }
 
-  input, select {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f7f7f7;
-    color: black; /* Ensure the text color is black in the input fields */
-  }
-
-  select option {
-    color: black; /* Ensure the dropdown options text is black */
-  }
-
-  .full-width {
-    grid-column: span 2;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
   }
 `;
 
+const searchButtonStyles = css`
+  background-color: var(--color-primary);
+  color: var(--color-component-bg);
+  border: none;
+  padding: 16px;
+  font-size: 18px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+  margin-top: 16px;
+  border-radius: 0 0 8px 8px;
 
-const passengersSelectStyle = css`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  align-items: center;
-
-  select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+  &:hover {
+    background-color: var(--color-secondary);
   }
 `;
 
-export default function CTA() {
+export default function FlightSearchForm() {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [departureDate, setDepartureDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
-  const [adults, setAdults] = useState('1');
-  const [children, setChildren] = useState('0');
-  const [seniors, setSeniors] = useState('0');
+  const [passengers, setPassengers] = useState({
+    adults: 1,
+    children: 0,
+    seniors: 0,
+  });
   const [oneWay, setOneWay] = useState(false);
   const router = useRouter();
 
-  // Handle form submission and pass state as query to the next page
-  const searchAvailableFlights = () => {
+  const handleSearch = () => {
     const query = {
       origin,
       destination,
       departureDate,
       returnDate: oneWay ? undefined : returnDate,
-      adults,
-      children,
-      seniors,
-      oneWay: oneWay ? 'true' : undefined
+      adults: passengers.adults.toString(),
+      children: passengers.children.toString(),
+      seniors: passengers.seniors.toString(),
+      oneWay: oneWay ? 'true' : undefined,
     };
 
     const cleanQuery = Object.fromEntries(Object.entries(query).filter(([_, v]) => v != null));
+
     router.push({ pathname: '/search-results', query: cleanQuery });
   };
 
+  const handlePassengerChange = (value: { adults: number; children: number; seniors: number }) => {
+    setPassengers(value);
+  };
+
+  // Prevent return date from being earlier than departure date
+  const minReturnDate = departureDate;
+
   return (
-    <div css={pageContainerStyles}>
-      <div css={searchFormStyles}>
-        {/* Origin and Destination (Dropdown with live filtering) */}
-        <div className="search-form-left">
-          <DropdownSelect label="Origin" id="origin" onSelect={setOrigin} />
-          <DropdownSelect label="Destination" id="destination" onSelect={setDestination} />
+    <div css={ticketContainerStyles}>
+      {/* Origin and Destination Section */}
+      <div css={sectionStyles}>
+        <div css={originDestinationStyles}>
+          <DropdownSelect type="origin" value={origin} onSelect={setOrigin} />
+          <DropdownSelect type="destination" value={destination} onSelect={setDestination} />
         </div>
+      </div>
 
+      {/* Divider */}
+      <div css={dividerStyles}></div>
 
-        {/* Dates and Passenger Information */}
-        <div className="search-form-right">
-          <div>
-            <label htmlFor="departure-date">Departure Date</label>
-            <input
-              type="date"
-              id="departure-date"
-              value={departureDate}
-              onChange={(e) => setDepartureDate(e.target.value)}
-            />
+      {/* Dates and Passengers Section */}
+      <div css={sectionStyles}>
+        <div css={datesPassengersStyles}>
+          {/* Date Selection Row */}
+          <div css={dateGroupStyles}>
+            <div className="date-field">
+              <label htmlFor="departureDate">Departure Date</label>
+              <input
+                type="date"
+                id="departureDate"
+                value={departureDate}
+                onChange={(e) => setDepartureDate(e.target.value)}
+                required
+              />
+            </div>
+            {!oneWay && (
+              <div className="date-field">
+                <label htmlFor="returnDate">Return Date</label>
+                <input
+                  type="date"
+                  id="returnDate"
+                  value={returnDate}
+                  min={minReturnDate}
+                  onChange={(e) => setReturnDate(e.target.value)}
+                />
+              </div>
+            )}
           </div>
 
-          <div>
-            <label htmlFor="return-date">Return Date</label>
-            <input
-              type="date"
-              id="return-date"
-              value={returnDate}
-              onChange={(e) => setReturnDate(e.target.value)}
-              disabled={oneWay}
-            />
-          </div>
-
-          {/* Passenger Select */}
-          <div css={passengersSelectStyle}>
-            <label htmlFor="adults">Adults</label>
-            <select id="adults" value={adults} onChange={(e) => setAdults(e.target.value)}>
-              <option value="1">1 Adult</option>
-              <option value="2">2 Adults</option>
-            </select>
-
-            <label htmlFor="children">Children</label>
-            <select id="children" value={children} onChange={(e) => setChildren(e.target.value)}>
-              <option value="0">0 Child</option>
-              <option value="1">1 Child</option>
-            </select>
-
-            <label htmlFor="seniors">Seniors</label>
-            <select id="seniors" value={seniors} onChange={(e) => setSeniors(e.target.value)}>
-              <option value="0">0 Senior</option>
-              <option value="1">1 Senior</option>
-            </select>
-          </div>
-
-          {/* One-Way Checkbox */}
-          <div>
-            <label>
-              <input type="checkbox" checked={oneWay} onChange={() => setOneWay(!oneWay)} />
-              One Way
-            </label>
+          {/* Passengers and One Way Row */}
+          <div css={passengerOneWayStyles}>
+            <PassSelect value={passengers} onChange={handlePassengerChange} />
+            <div className="checkbox-group">
+              <input
+                type="checkbox"
+                id="oneWay"
+                checked={oneWay}
+                onChange={(e) => setOneWay(e.target.checked)}
+              />
+              <label htmlFor="oneWay">One Way</label>
+            </div>
           </div>
         </div>
 
         {/* Search Button */}
-        <button className="search-button full-width" onClick={searchAvailableFlights}>
-          Search Available Flights
+        <button css={searchButtonStyles} onClick={handleSearch}>
+          Search Flights
         </button>
       </div>
     </div>

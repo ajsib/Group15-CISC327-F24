@@ -7,13 +7,14 @@ import { Airplane } from 'phosphor-react';
 const heroContainerStyle = css`
   position: relative;
   width: 100%;
-  height: 30vh;
+  height: 40vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   background-color: #000; /* Fallback for background image */
+  padding-bottom: 80px;
 `;
 
 const heroImageStyle = css`
@@ -66,7 +67,7 @@ export default function Hero() {
     <section css={heroContainerStyle}>
       {/* Background image */}
       <Image
-        src="/images/banner.jpg"
+        src="/images/banner2.jpg"
         alt="Hero background"
         layout="fill"
         css={heroImageStyle}
