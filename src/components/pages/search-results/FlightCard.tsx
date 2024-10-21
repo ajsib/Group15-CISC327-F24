@@ -1,53 +1,77 @@
+// components/pages/search-results/FlightCard.tsx
+
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import Link from 'next/link';
+import { Flight } from './service';
+
+interface FlightCardProps {
+  flight: Flight;
+  onSelect: (flight: Flight) => void;
+}
 
 const cardStyles = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid #ccc;
+  padding: 16px;
+  border-bottom: 1px solid var(--color-border);
 
-  .flight-info {
-    flex-grow: 1;
-  }
-
-  .book-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #218838;
-    }
+  &:last-of-type {
+    border-bottom: none;
   }
 `;
 
-type FlightCardProps = {
-  flight: {
-    id: number;
-    origin: string;
-    destination: string;
-    date: string;
-  };
-};
+const flightInfoStyles = css`
+  display: flex;
+  align-items: center;
+  gap: 16px;
 
-const FlightCard = ({ flight }: FlightCardProps) => {
+  .times {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .airports {
+    font-size: 14px;
+    color: var(--color-muted);
+  }
+`;
+
+const priceStyles = css`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const buttonStyles = css`
+  padding: 8px 16px;
+  background-color: var(--color-primary);
+  color: var(--color-component-bg);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-secondary);
+  }
+`;
+
+export default function FlightCard({ flight, onSelect }: FlightCardProps) {
   return (
     <div css={cardStyles}>
-      <div className="flight-info">
-        <h3>{`Flight from ${flight.origin} to ${flight.destination}`}</h3>
-        <p>Date: {flight.date}</p>
+      <div css={flightInfoStyles}>
+        <div>
+          <div className="times">
+            {flight.departureTime} &rarr; {flight.arrivalTime}
+          </div>
+          <div className="airports">
+            {flight.origin.code} to {flight.destination.code}
+          </div>
+        </div>
       </div>
-      <Link href="/booking">
-        <button className="book-button">Book</button>
-      </Link>
+      <div css={priceStyles}>${flight.price.toFixed(2)}</div>
+      <button css={buttonStyles} onClick={() => onSelect(flight)}>
+        Book
+      </button>
     </div>
   );
-};
-
-export default FlightCard;
+}
