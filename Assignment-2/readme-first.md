@@ -1,6 +1,8 @@
-CISC327 Software Quality Assurance Fall 2024\\
-Group 15: Aidan Sibley, Youssef Elmanawy, Will Wu\\
-Assignment 2\\
+CISC327 Software Quality Assurance Fall 2024 
+
+Group 15: Aidan Sibley, Youssef Elmanawy, Will Wu 
+
+Assignment 2
 
 # Flight Booking Application
 
