@@ -40,12 +40,18 @@ const searchFormStyles = css`
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f7f7f7;
+    color: black; /* Ensure the text color is black in the input fields */
+  }
+
+  select option {
+    color: black; /* Ensure the dropdown options text is black */
   }
 
   .full-width {
     grid-column: span 2;
   }
 `;
+
 
 const passengersSelectStyle = css`
   display: grid;
@@ -71,52 +77,57 @@ export default function CTA() {
   const [oneWay, setOneWay] = useState(false);
   const router = useRouter();
 
-  // Handle the form submission
-  const handleSearch = () => {
-    // Collect the query parameters
+  // Handle form submission and pass state as query to the next page
+  const searchAvailableFlights = () => {
     const query = {
       origin,
       destination,
       departureDate,
-      returnDate: oneWay ? undefined : returnDate, // Don't include return date if one-way
+      returnDate: oneWay ? undefined : returnDate,
       adults,
       children,
       seniors,
-      oneWay: oneWay ? 'true' : undefined // Only include 'oneWay' if true
+      oneWay: oneWay ? 'true' : undefined
     };
 
-    // Remove any undefined query parameters
     const cleanQuery = Object.fromEntries(Object.entries(query).filter(([_, v]) => v != null));
-
-    // Navigate to the search results page with the query
-    router.push({
-      pathname: '/search-results',
-      query: cleanQuery
-    });
+    router.push({ pathname: '/search-results', query: cleanQuery });
   };
 
   return (
     <div css={pageContainerStyles}>
       <div css={searchFormStyles}>
-        {/* Left Section: Origin and Destination */}
+        {/* Origin and Destination (Dropdown with live filtering) */}
         <div className="search-form-left">
           <DropdownSelect label="Origin" id="origin" onSelect={setOrigin} />
           <DropdownSelect label="Destination" id="destination" onSelect={setDestination} />
         </div>
 
-        {/* Right Section: Dates and Passengers */}
+
+        {/* Dates and Passenger Information */}
         <div className="search-form-right">
           <div>
             <label htmlFor="departure-date">Departure Date</label>
-            <input type="date" id="departure-date" value={departureDate} onChange={(e) => setDepartureDate(e.target.value)} />
+            <input
+              type="date"
+              id="departure-date"
+              value={departureDate}
+              onChange={(e) => setDepartureDate(e.target.value)}
+            />
           </div>
 
           <div>
             <label htmlFor="return-date">Return Date</label>
-            <input type="date" id="return-date" value={returnDate} onChange={(e) => setReturnDate(e.target.value)} disabled={oneWay} />
+            <input
+              type="date"
+              id="return-date"
+              value={returnDate}
+              onChange={(e) => setReturnDate(e.target.value)}
+              disabled={oneWay}
+            />
           </div>
 
-          {/* Passenger Input */}
+          {/* Passenger Select */}
           <div css={passengersSelectStyle}>
             <label htmlFor="adults">Adults</label>
             <select id="adults" value={adults} onChange={(e) => setAdults(e.target.value)}>
@@ -137,7 +148,7 @@ export default function CTA() {
             </select>
           </div>
 
-          {/* One-Way Option */}
+          {/* One-Way Checkbox */}
           <div>
             <label>
               <input type="checkbox" checked={oneWay} onChange={() => setOneWay(!oneWay)} />
@@ -147,7 +158,9 @@ export default function CTA() {
         </div>
 
         {/* Search Button */}
-        <button className="search-button full-width" onClick={handleSearch}>Search Available Flights</button>
+        <button className="search-button full-width" onClick={searchAvailableFlights}>
+          Search Available Flights
+        </button>
       </div>
     </div>
   );

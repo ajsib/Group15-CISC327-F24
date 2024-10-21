@@ -1,198 +1,95 @@
 /** @jsxImportSource @emotion/react */
+import { useState, useEffect } from 'react';
 import { css } from '@emotion/react';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router'; // Import useRouter to get query params
+import SearchResultsHeader from '../../components/pages/search-results/SearchResultsHeader';
+import FlightCard from '../../components/pages/search-results/FlightCard';
+import PaginationControls from '../../components/pages/search-results/PaginationControls';
+// import FiltersSidebar from '../../components/pages/search-results/FiltersSidebar'; // Uncomment if using
 
-// Define types for flight data
+// Define the Flight type
 interface Flight {
   id: number;
-  time: string;
-  route: string;
-  price: number;
+  origin: string;
+  destination: string;
+  date: string;
 }
 
-type FlightData = {
-  [date: string]: Flight[];
-};
-
-// CSS styles using Emotion
-const containerStyle = css`
+const pageContainerStyles = css`
   font-family: Arial, sans-serif;
-  padding: 2rem;
-  background-color: #f5f5f5;
-  min-height: 100vh;
 `;
 
-const headerStyle = css`
+const contentStyles = css`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #e0e0e0;
-  padding: 1rem;
-  margin-bottom: 1rem;
-
-  h1 {
-    color: black;
-  }
 `;
 
-const flightInfoStyle = css`
-  padding: 1rem;
-  background-color: #eeeeee;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-
-  h2, p, span {
-    color: black; /* Small text explicitly set to black */
-  }
+const resultsStyles = css`
+  flex-grow: 1;
+  padding: 20px;
 `;
 
-const datePickerStyle = css`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin: 1rem 0;
-
-  button {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 0.75rem 1.5rem;
-    cursor: pointer;
-    color: black; /* Ensure button text is black */
-
-    &.active {
-      font-weight: bold;
-      border-color: #0070f3;
-    }
-
-    &:hover {
-      background-color: #e0e0e0;
-    }
-  }
-`;
-
-const flightListStyle = css`
-  background-color: white;
-  padding: 1rem;
-  border-radius: 8px;
-
-  h3, p, span {
-    color: black; /* All small texts are black */
-  }
-`;
-
-const flightRowStyle = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid #ddd;
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-const priceStyle = css`
-  font-weight: bold;
-  color: black;
-`;
-
-const loadMoreStyle = css`
-  text-align: center;
-  margin-top: 1rem;
-
-  button {
-    background-color: #0070f3;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: #005bb5;
-    }
-  }
-`;
-
-const FlightSearchResultsPage = () => {
+const SearchResultsPage = () => {
   const router = useRouter();
-  const { date } = router.query;
+  
+  // Get the query params from the URL (i.e. from the CTA page)
+  const { origin, destination, departureDate } = router.query;
 
-  const [selectedDate, setSelectedDate] = useState<string>(date as string || '2024-09-30');
-  const [flights, setFlights] = useState<Flight[]>([]);
+  const [flights, setFlights] = useState<Flight[]>([]); // Explicitly setting Flight[] as the type
+  const [currentPage, setCurrentPage] = useState(1);
+  const flightsPerPage = 10;
+  const totalPages = Math.ceil(flights.length / flightsPerPage);
 
-  const flightData: FlightData = {
-    '2024-09-29': [
-      { id: 1, time: '05:32 - 06:17', route: 'YYZ to YOW', price: 950.33 },
-      { id: 2, time: '07:32 - 08:17', route: 'YYZ to YOW', price: 1270.5 },
-    ],
-    '2024-09-30': [
-      { id: 3, time: '05:32 - 06:17', route: 'YYZ to YOW', price: 1050.75 },
-      { id: 4, time: '08:32 - 09:17', route: 'YYZ to YOW', price: 1370.5 },
-    ],
-    '2024-10-01': [
-      { id: 5, time: '06:32 - 07:17', route: 'YYZ to YOW', price: 1200.99 },
-    ],
+  const indexOfLastFlight = currentPage * flightsPerPage;
+  const indexOfFirstFlight = indexOfLastFlight - flightsPerPage;
+  const currentFlights = flights.slice(indexOfFirstFlight, indexOfLastFlight);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
+  // Load the flight data from the JSON file on component mount and filter flights
   useEffect(() => {
-    setFlights(flightData[selectedDate] || []);
-  }, [selectedDate]);
+    const fetchFlights = async () => {
+      const res = await fetch('/flights.json'); // Fetch flight data from JSON
+      const data: Flight[] = await res.json();
 
-  const handleDateChange = (newDate: string) => {
-    setSelectedDate(newDate);
-    router.push(`/search-results?date=${newDate}`, undefined, { shallow: true });
-  };
+      // Filter the flights based on the query parameters (origin, destination, date)
+      const filteredFlights = data.filter((flight) => {
+        return (
+          (!origin || flight.origin.toLowerCase().includes((origin as string).toLowerCase())) &&
+          (!destination || flight.destination.toLowerCase().includes((destination as string).toLowerCase())) &&
+          (!departureDate || flight.date === departureDate)
+        );
+      });
+
+      setFlights(filteredFlights); // Set the filtered flights
+    };
+
+    fetchFlights();
+  }, [origin, destination, departureDate]); // Re-run whenever query params change
 
   return (
-    <div css={containerStyle}>
-      <header css={headerStyle}>
-        <h1>Flight Search Results</h1>
-        <button>Sign In</button>
-      </header>
-
-      <div css={flightInfoStyle}>
-        <h2>Select Departing Flight</h2>
-        <p>Toronto YYZ to Ottawa YOW | {selectedDate}</p>
-      </div>
-
-      <div css={datePickerStyle}>
-        {Object.keys(flightData).map((d) => (
-          <button
-            key={d}
-            className={d === selectedDate ? 'active' : ''}
-            onClick={() => handleDateChange(d)}
-          >
-            {d}
-          </button>
-        ))}
-      </div>
-
-      <div css={flightListStyle}>
-        <h3>Economy</h3>
-        {flights.length > 0 ? (
-          flights.map((flight) => (
-            <div key={flight.id} css={flightRowStyle}>
-              <div>
-                <p>{flight.time}</p>
-                <p>{flight.route}</p>
-              </div>
-              <div css={priceStyle}>${flight.price.toFixed(2)}</div>
-            </div>
-          ))
-        ) : (
-          <p>No flights available for this date.</p>
-        )}
-      </div>
-
-      <div css={loadMoreStyle}>
-        <button onClick={() => alert('Loading more flights...')}>Load more</button>
+    <div css={pageContainerStyles}>
+      <SearchResultsHeader />
+      <div css={contentStyles}>
+        {/* <FiltersSidebar /> Uncomment if using */}
+        <div css={resultsStyles}>
+          {currentFlights.length > 0 ? (
+            currentFlights.map((flight) => (
+              <FlightCard key={flight.id} flight={flight} />
+            ))
+          ) : (
+            <p>No flights found matching your criteria.</p>
+          )}
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-export default FlightSearchResultsPage;
+export default SearchResultsPage;
