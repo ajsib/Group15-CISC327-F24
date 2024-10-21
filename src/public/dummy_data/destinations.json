@@ -1,0 +1,110 @@
+{
+    "Destinations": [
+      {
+        "id": 1,
+        "code": "CDG",
+        "city": "Paris",
+        "country": "France",
+        "airport": "Charles de Gaulle Airport"
+      },
+      {
+        "id": 2,
+        "code": "LHR",
+        "city": "London",
+        "country": "United Kingdom",
+        "airport": "Heathrow Airport"
+      },
+      {
+        "id": 3,
+        "code": "JFK",
+        "city": "New York",
+        "country": "United States",
+        "airport": "John F. Kennedy International Airport"
+      },
+      {
+        "id": 4,
+        "code": "HND",
+        "city": "Tokyo",
+        "country": "Japan",
+        "airport": "Tokyo Haneda Airport"
+      },
+      {
+        "id": 5,
+        "code": "DXB",
+        "city": "Dubai",
+        "country": "United Arab Emirates",
+        "airport": "Dubai International Airport"
+      },
+      {
+        "id": 6,
+        "code": "SIN",
+        "city": "Singapore",
+        "country": "Singapore",
+        "airport": "Singapore Changi Airport"
+      },
+      {
+        "id": 7,
+        "code": "SYD",
+        "city": "Sydney",
+        "country": "Australia",
+        "airport": "Sydney Kingsford Smith Airport"
+      },
+      {
+        "id": 8,
+        "code": "FRA",
+        "city": "Frankfurt",
+        "country": "Germany",
+        "airport": "Frankfurt Airport"
+      },
+      {
+        "id": 9,
+        "code": "AMS",
+        "city": "Amsterdam",
+        "country": "Netherlands",
+        "airport": "Amsterdam Schiphol Airport"
+      },
+      {
+        "id": 10,
+        "code": "YYZ",
+        "city": "Toronto",
+        "country": "Canada",
+        "airport": "Toronto Pearson International Airport"
+      },
+      {
+        "id": 11,
+        "code": "LAX",
+        "city": "Los Angeles",
+        "country": "United States",
+        "airport": "Los Angeles International Airport"
+      },
+      {
+        "id": 12,
+        "code": "GRU",
+        "city": "Sao Paulo",
+        "country": "Brazil",
+        "airport": "São Paulo-Guarulhos International Airport"
+      },
+      {
+        "id": 13,
+        "code": "HKG",
+        "city": "Hong Kong",
+        "country": "Hong Kong SAR",
+        "airport": "Hong Kong International Airport"
+      },
+      {
+        "id": 14,
+        "code": "BOM",
+        "city": "Mumbai",
+        "country": "India",
+        "airport": "Chhatrapati Shivaji Maharaj International Airport"
+      },
+      {
+        "id": 15,
+        "code": "ZRH",
+        "city": "Zurich",
+        "country": "Switzerland",
+        "airport": "Zurich Airport"
+      }
+    ]
+  }
+  

@@ -1,0 +1,185 @@
+{
+    "Flights": [
+      {
+        "id": 1,
+        "origin_id": 1,
+        "destination_id": 2,
+        "departureDate": "2024-10-25",
+        "returnDate": "2024-11-01",
+        "departureTime": "10:00",
+        "arrivalTime": "11:30",
+        "adults": 1,
+        "children": 0,
+        "seniors": 0
+      },
+      {
+        "id": 2,
+        "origin_id": 2,
+        "destination_id": 3,
+        "departureDate": "2024-12-05",
+        "returnDate": "2024-12-20",
+        "departureTime": "14:45",
+        "arrivalTime": "19:00",
+        "adults": 2,
+        "children": 1,
+        "seniors": 1
+      },
+      {
+        "id": 3,
+        "origin_id": 3,
+        "destination_id": 1,
+        "departureDate": "2024-11-10",
+        "returnDate": null,
+        "departureTime": "09:30",
+        "arrivalTime": "17:45",
+        "adults": 1,
+        "children": 0,
+        "seniors": 0
+      },
+      {
+        "id": 4,
+        "origin_id": 4,
+        "destination_id": 5,
+        "departureDate": "2024-12-01",
+        "returnDate": "2024-12-10",
+        "departureTime": "07:15",
+        "arrivalTime": "12:50",
+        "adults": 3,
+        "children": 0,
+        "seniors": 1
+      },
+      {
+        "id": 5,
+        "origin_id": 6,
+        "destination_id": 7,
+        "departureDate": "2024-10-30",
+        "returnDate": "2024-11-10",
+        "departureTime": "13:20",
+        "arrivalTime": "17:05",
+        "adults": 1,
+        "children": 2,
+        "seniors": 0
+      },
+      {
+        "id": 6,
+        "origin_id": 8,
+        "destination_id": 9,
+        "departureDate": "2024-11-15",
+        "returnDate": null,
+        "departureTime": "08:00",
+        "arrivalTime": "10:00",
+        "adults": 1,
+        "children": 0,
+        "seniors": 0
+      },
+      {
+        "id": 7,
+        "origin_id": 10,
+        "destination_id": 11,
+        "departureDate": "2024-12-24",
+        "returnDate": "2025-01-02",
+        "departureTime": "23:30",
+        "arrivalTime": "05:45",
+        "adults": 2,
+        "children": 1,
+        "seniors": 1
+      },
+      {
+        "id": 8,
+        "origin_id": 12,
+        "destination_id": 13,
+        "departureDate": "2025-01-05",
+        "returnDate": "2025-01-10",
+        "departureTime": "15:15",
+        "arrivalTime": "22:30",
+        "adults": 1,
+        "children": 0,
+        "seniors": 0
+      },
+      {
+        "id": 9,
+        "origin_id": 14,
+        "destination_id": 15,
+        "departureDate": "2024-11-20",
+        "returnDate": "2024-12-05",
+        "departureTime": "05:00",
+        "arrivalTime": "08:45",
+        "adults": 2,
+        "children": 2,
+        "seniors": 1
+      },
+      {
+        "id": 10,
+        "origin_id": 5,
+        "destination_id": 1,
+        "departureDate": "2024-12-12",
+        "returnDate": null,
+        "departureTime": "22:00",
+        "arrivalTime": "05:15",
+        "adults": 1,
+        "children": 0,
+        "seniors": 0
+      },
+      {
+        "id": 11,
+        "origin_id": 2,
+        "destination_id": 7,
+        "departureDate": "2024-11-30",
+        "returnDate": "2024-12-05",
+        "departureTime": "16:10",
+        "arrivalTime": "21:55",
+        "adults": 2,
+        "children": 1,
+        "seniors": 0
+      },
+      {
+        "id": 12,
+        "origin_id": 9,
+        "destination_id": 10,
+        "departureDate": "2024-10-28",
+        "returnDate": null,
+        "departureTime": "11:00",
+        "arrivalTime": "13:30",
+        "adults": 1,
+        "children": 0,
+        "seniors": 0
+      },
+      {
+        "id": 13,
+        "origin_id": 4,
+        "destination_id": 6,
+        "departureDate": "2024-12-20",
+        "returnDate": "2024-12-31",
+        "departureTime": "19:00",
+        "arrivalTime": "01:45",
+        "adults": 3,
+        "children": 0,
+        "seniors": 0
+      },
+      {
+        "id": 14,
+        "origin_id": 3,
+        "destination_id": 8,
+        "departureDate": "2025-01-15",
+        "returnDate": null,
+        "departureTime": "10:30",
+        "arrivalTime": "14:20",
+        "adults": 1,
+        "children": 0,
+        "seniors": 0
+      },
+      {
+        "id": 15,
+        "origin_id": 12,
+        "destination_id": 11,
+        "departureDate": "2024-11-01",
+        "returnDate": "2024-11-10",
+        "departureTime": "06:30",
+        "arrivalTime": "12:00",
+        "adults": 2,
+        "children": 1,
+        "seniors": 1
+      }
+    ]
+  }
+  
