@@ -1,0 +1,105 @@
+{
+    "Flights": [
+      {
+        "id": 1,
+        "origin_id": 1,
+        "destination_id": 2,
+        "departureDate": "2024-10-25",
+        "departureTime": "08:00",
+        "arrivalTime": "09:30",
+        "price": 150.00,
+        "airline": "Air France"
+      },
+      {
+        "id": 2,
+        "origin_id": 2,
+        "destination_id": 3,
+        "departureDate": "2024-10-25",
+        "departureTime": "10:00",
+        "arrivalTime": "13:00",
+        "price": 450.00,
+        "airline": "British Airways"
+      },
+      {
+        "id": 3,
+        "origin_id": 3,
+        "destination_id": 4,
+        "departureDate": "2024-10-25",
+        "departureTime": "14:00",
+        "arrivalTime": "16:30",
+        "price": 350.00,
+        "airline": "Delta Air Lines"
+      },
+      {
+        "id": 4,
+        "origin_id": 4,
+        "destination_id": 5,
+        "departureDate": "2024-10-26",
+        "departureTime": "09:00",
+        "arrivalTime": "11:00",
+        "price": 500.00,
+        "airline": "United Airlines"
+      },
+      {
+        "id": 5,
+        "origin_id": 5,
+        "destination_id": 6,
+        "departureDate": "2024-10-26",
+        "departureTime": "12:00",
+        "arrivalTime": "20:00",
+        "price": 600.00,
+        "airline": "Japan Airlines"
+      },
+      {
+        "id": 6,
+        "origin_id": 6,
+        "destination_id": 7,
+        "departureDate": "2024-10-27",
+        "departureTime": "08:00",
+        "arrivalTime": "16:00",
+        "price": 700.00,
+        "airline": "Qantas"
+      },
+      {
+        "id": 7,
+        "origin_id": 7,
+        "destination_id": 8,
+        "departureDate": "2024-10-27",
+        "departureTime": "22:00",
+        "arrivalTime": "06:00",
+        "price": 800.00,
+        "airline": "Emirates"
+      },
+      {
+        "id": 8,
+        "origin_id": 8,
+        "destination_id": 9,
+        "departureDate": "2024-10-28",
+        "departureTime": "07:00",
+        "arrivalTime": "08:00",
+        "price": 100.00,
+        "airline": "Air Canada"
+      },
+      {
+        "id": 9,
+        "origin_id": 9,
+        "destination_id": 10,
+        "departureDate": "2024-10-28",
+        "departureTime": "09:00",
+        "arrivalTime": "17:00",
+        "price": 550.00,
+        "airline": "KLM"
+      },
+      {
+        "id": 10,
+        "origin_id": 10,
+        "destination_id": 1,
+        "departureDate": "2024-10-29",
+        "departureTime": "11:00",
+        "arrivalTime": "13:00",
+        "price": 650.00,
+        "airline": "Air France"
+      }
+    ]
+  }
+  

@@ -113,9 +113,17 @@ const searchButtonStyles = css`
   }
 `;
 
+interface Airport {
+  id: number;
+  code: string;
+  city: string;
+  country: string;
+  airport: string;
+}
+
 export default function FlightSearchForm() {
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
+  const [origin, setOrigin] = useState<Airport | null>(null);
+  const [destination, setDestination] = useState<Airport | null>(null);
   const [departureDate, setDepartureDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
   const [passengers, setPassengers] = useState({
@@ -127,9 +135,16 @@ export default function FlightSearchForm() {
   const router = useRouter();
 
   const handleSearch = () => {
+    if (!origin || !destination || !departureDate) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
     const query = {
-      origin,
-      destination,
+      origin_id: origin.id.toString(),
+      destination_id: destination.id.toString(),
+      origin_code: origin.code,
+      destination_code: destination.code,
       departureDate,
       returnDate: oneWay ? undefined : returnDate,
       adults: passengers.adults.toString(),
@@ -138,7 +153,9 @@ export default function FlightSearchForm() {
       oneWay: oneWay ? 'true' : undefined,
     };
 
-    const cleanQuery = Object.fromEntries(Object.entries(query).filter(([_, v]) => v != null));
+    const cleanQuery = Object.fromEntries(
+      Object.entries(query).filter(([_, v]) => v != null)
+    );
 
     router.push({ pathname: '/search-results', query: cleanQuery });
   };
