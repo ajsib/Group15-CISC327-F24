@@ -9,9 +9,9 @@
 
 ## Project Overview
 
-Welcome to the Group 15 project for CISC 327 - Fall 2024. This project is a web application platform for booking flights. The system allows users to search for flights, select seats, make payments, and perform other activities. The goal is to provide users with a smooth and enhanced booking experience.
+Welcome to the Group 15 project for CISC 327 - Fall 2024. This project is a web application platform for booking flights. The system allows users to search for flights, select options like passengers, view search results, and perform other booking-related activities. The goal is to provide users with a smooth and enhanced booking experience.
 
-This README file provides a comprehensive guide for developers to set up the project on their local machine, including navigating the project directory and understanding where everything is located.
+This README provides a comprehensive guide to set up the project on your local machine, navigate the project directory, understand the file structure, and run the tests.
 
 ---
 
@@ -19,143 +19,122 @@ This README file provides a comprehensive guide for developers to set up the pro
 
 ```
 .
-├── client                  # Next.js front-end application
-│   ├── next.config.mjs     # Next.js configuration file
-│   ├── next-env.d.ts       # TypeScript environment settings for Next.js
-│   ├── package.json        # Front-end dependencies and scripts managed by pnpm
-│   ├── pages               # Contains Next.js pages
-│   │   ├── _app.tsx        # Custom App component for global setups
-│   │   └── index.tsx       # Home page of the application
-│   ├── pnpm-lock.yaml      # Lockfile for pnpm dependencies
-│   ├── public              # Static assets such as fonts and images
-│   │   └── fonts           # Fonts used in the application
-│   ├── README.md           # Front-end specific README
-│   ├── styles              # Global and base styles for the front-end
-│   │   ├── base            # Base styles including colors, fonts, reset, and typography
-│   │   │   ├── _colors.css
-│   │   │   ├── _fonts.css
-│   │   │   ├── _reset.css
-│   │   │   └── _typography.css
-│   │   ├── globals.css     # Global CSS for the application
-│   │   └── GlobalStyles.tsx # Emotion-based global styles for Next.js
-│   └── tsconfig.json       # TypeScript configuration for the front-end
-├── how-to-run.md           # Instructions on running the project (specific details)
-├── project-ideas.md        # Initial project ideas and brainstorming document
-├── README.md               # The main README file (you are here)
-└── server                  # Flask back-end application
-    ├── app.py              # Main Flask application file
-    ├── dummy_data          # Directory containing JSON files with dummy data
-    │   └── welcome.json    # JSON data used for the welcome page API
-    ├── requirements.txt    # Python dependencies for the back-end
-    └── templates           # HTML templates rendered by Flask
-        └── index.html      # Basic welcome page served by Flask
+├── Assignment-1
+│   └── group15-assignment1.pdf         # Previous assignment files
+├── Assignment-2
+│   ├── readme-first.md                 # Instructions specific to Assignment-2
+│   ├── screenshots                     # Screenshots of the test results
+│   └── task-dist.md                    # Contribution details
+├── pnpm-lock.yaml                      # Lockfile for pnpm dependencies
+├── project-ideas.md                    # Initial project ideas and brainstorming document
+├── README.md                           # The main README file (you are here)
+└── src                                 # Main application directory
+    ├── components                      # All application components
+    │   ├── pages
+    │   │   ├── landing                 # Components for the landing page
+    │   │   │   ├── CTA
+    │   │   │   │   ├── DropdownSelect.tsx
+    │   │   │   │   ├── PassSelect.tsx
+    │   │   │   │   └── __tests__
+    │   │   │   │       ├── DropdownSelect.test.tsx
+    │   │   │   │       ├── FlightSearchForm.test.tsx
+    │   │   │   │       └── PassSelect.test.tsx
+    │   │   ├── search-results          # Components for search results page
+    │   │       ├── components
+    │   │       │   ├── DateTabs.tsx
+    │   │       │   ├── FlightCard.tsx
+    │   │       │   ├── FlightsList.tsx
+    │   │       │   ├── LoadMoreButton.tsx
+    │   │       │   ├── InfoBanner.tsx
+    │   │       │   └── SearchHeader.tsx
+    │   │       ├── index.tsx           # Main page for search results
+    │   │       ├── service.ts          # Mock service to retrieve flight data
+    │   │       └── __tests__
+    │   │           ├── DateTabs.test.tsx
+    │   │           ├── FlightCard.test.tsx
+    │   │           ├── FlightsList.test.tsx
+    │   │           ├── LoadMoreButton.test.tsx
+    │   │           └── SearchHeader.test.tsx
+    ├── jest.config.ts                  # Jest configuration for running tests
+    ├── jest.setup.ts                   # Jest setup file
+    ├── next.config.mjs                 # Next.js configuration
+    ├── package.json                    # Project dependencies and scripts managed by pnpm
+    ├── public                          # Static assets and dummy data
+    │   ├── dummy_data
+    │   │   ├── destinations.json       # Dummy data for destinations
+    │   │   └── flights.json            # Dummy data for flights
+    ├── styles                          # Global and base styles for the front-end
+    └── tsconfig.json                   # TypeScript configuration
 ```
-
-### Directory Structure Explanation:
-- **client/**: Contains the Next.js front-end of the application. Here, you will find all the React components, pages, styles, and configuration files needed for the front-end.
-- **server/**: Contains the Flask back-end of the application. This directory includes the main application file (`app.py`), templates, and dummy data used for development.
-- **how-to-run.md**: Provides specific instructions on how to run the project.
-- **project-ideas.md**: A document containing initial ideas and discussions for the project.
 
 ---
 
-## Developer Onboarding Guide
+## Setup Instructions
 
 ### Prerequisites
-Before you begin, ensure you have the following installed on your machine:
-- **Git**: Version control system for managing your code.
-- **Python 3.8+**: Required for the Flask back-end.
-- **Node.js 16+**: JavaScript runtime for the front-end (Next.js).
-- **pnpm**: Package manager for the front-end. Install via `npm install -g pnpm`.
 
-### Setup Instructions
+Before you begin, ensure you have the following installed on your machine:
+- **Node.js 16+**: JavaScript runtime for the front-end (Next.js).
+- **pnpm**: Package manager for the front-end. Install via:
+  ```bash
+  npm install -g pnpm
+  ```
+
+### Steps to Get Started
 
 #### 1. Clone the Repository
 First, clone the repository to your local machine:
 ```bash
-git clone https://github.com/your-repo/project.git
+git clone https://github.com/ajsib/Group15-CISC327-F24.git
 cd project
 ```
 
-#### 2. Setting Up the Back-End (Flask)
+#### 2. Install Dependencies
+Navigate to the project directory and install all the required dependencies:
+```bash
+cd src
+pnpm install
+```
 
-**Linux/macOS/Windows:**
+#### 3. Run the Development Server
+To start the development server, run:
+```bash
+pnpm dev
+```
+The Next.js server should now be running on `http://localhost:3000/`.
 
-1. **Navigate to the `server/` directory:**
-   ```bash
-   cd server
-   ```
+### Running the Tests
 
-2. **Set up a virtual environment:**
+#### Running All Tests:
+To run the test suite and ensure everything works correctly, run:
+```bash
+pnpm test
+```
 
-   **Linux/macOS:**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
+This will execute all the unit tests across the project. The test results, including passing and failing tests, will be displayed in the terminal.
 
-   **Windows:**
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate
-   ```
+### Available Test Files
 
-3. **Install the Python dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+Here is a breakdown of the test files available in the project:
 
-4. **Run the Flask server:**
-   ```bash
-   python app.py
-   ```
-   The Flask server should now be running on `http://127.0.0.1:5000/`.
+- **Landing Page Tests:**
+  - `DropdownSelect.test.tsx`: Tests for the dropdown selection component.
+  - `FlightSearchForm.test.tsx`: Tests the form where users input flight search criteria.
+  - `PassSelect.test.tsx`: Tests passenger selection functionality.
 
-#### 3. Setting Up the Front-End (Next.js)
+- **Search Results Page Tests:**
+  - `DateTabs.test.tsx`: Tests for the date tab selection component.
+  - `FlightCard.test.tsx`: Tests for the flight card component that displays flight details.
+  - `FlightsList.test.tsx`: Ensures the list of flights is correctly rendered.
+  - `LoadMoreButton.test.tsx`: Verifies the "Load More" button behavior.
+  - `SearchHeader.test.tsx`: Tests the search header that displays search criteria.
 
-**Linux/macOS/Windows:**
+Each test includes cases for rendering, user interactions, and correct data display.
 
-1. **Navigate to the `client/` directory:**
-   ```bash
-   cd client
-   ```
+### Mock Data for Testing
 
-2. **Install the Node.js dependencies using pnpm:**
-   ```bash
-   pnpm install
-   ```
+- **Flights**: The flight data is stored in `public/dummy_data/flights.json`.
+- **Destinations**: The destinations data is in `public/dummy_data/destinations.json`.
 
-3. **Run the Next.js development server:**
-   ```bash
-   pnpm dev
-   ```
-   The Next.js server should now be running on `http://localhost:3000/`.
+These JSON files contain dummy data used to mock the flight search functionality, allowing the application to run without connecting to a real backend.
 
-### Running Both Servers Simultaneously
-To work effectively, you need to run both the Flask (back-end) and Next.js (front-end) servers simultaneously. 
-
-You can use two terminal windows/tabs or utilize a process manager like `pm2` or `concurrently` (if you prefer).
-
-### Additional Information
-- **Testing**: Make sure to write and run tests as you develop. You can add testing libraries to the `client/` and `server/` as needed.
-- **Linting/Formatting**: Use appropriate tools like ESLint for JavaScript/TypeScript and `black` for Python to maintain code quality.
-- **Environment Variables**: If needed, use `.env` files to store environment-specific variables. Ensure sensitive data is not committed to version control.
-
-### Troubleshooting
-- **Common Issues**:
-  - If dependencies fail to install, ensure you are using the correct versions of Node.js, Python, and pnpm.
-  - If ports are occupied, you may need to free up the default ports or configure the servers to use different ones.
-  
-- **Windows-specific issues**:
-  - Ensure that paths are correctly set, especially when dealing with Python and Node.js. Using Windows Subsystem for Linux (WSL) can help mimic a Unix-like environment.
-
-### Future Improvements
-- **CI/CD Integration**: Automate testing and deployment.
-- **Dockerization**: Containerize the application to ensure consistent environments across development and production.
-
-### Contact Information
-For any issues, feel free to contact any of the group members via email or GitHub.
-
----
-
-We hope this guide helps you get started smoothly.
