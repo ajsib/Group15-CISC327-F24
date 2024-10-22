@@ -1,5 +1,3 @@
-// components/pages/search-results/LoadMoreButton.tsx
-
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
@@ -10,7 +8,9 @@ interface LoadMoreButtonProps {
 const buttonContainerStyles = css`
   display: flex;
   justify-content: center;
-  padding: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 16px auto;
 `;
 
 const buttonStyles = css`
@@ -20,6 +20,7 @@ const buttonStyles = css`
   border: none;
   cursor: pointer;
   border-radius: 4px;
+  width: 100%;
 
   &:hover {
     background-color: var(--color-secondary);

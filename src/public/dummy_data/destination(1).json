@@ -1,0 +1,431 @@
+{
+    "Destinations": [
+        {
+            "id": 33,
+            "code": "NBO",
+            "city": "Nairobi",
+            "country": "Kenya",
+            "airport": "Jomo Kenyatta International Airport"
+        },
+        {
+            "id": 35,
+            "code": "TLV",
+            "city": "Tel Aviv",
+            "country": "Israel",
+            "airport": "Ben Gurion Airport"
+        },
+        {
+            "id": 34,
+            "code": "LAX",
+            "city": "Los Angeles",
+            "country": "United States",
+            "airport": "Los Angeles International Airport"
+        },
+        {
+            "id": 47,
+            "code": "AMS",
+            "city": "Amsterdam",
+            "country": "Netherlands",
+            "airport": "Amsterdam Airport Schiphol"
+        },
+        {
+            "id": 29,
+            "code": "MNL",
+            "city": "Manila",
+            "country": "Philippines",
+            "airport": "Ninoy Aquino International Airport"
+        },
+        {
+            "id": 48,
+            "code": "SIN",
+            "city": "Singapore",
+            "country": "Singapore",
+            "airport": "Singapore Changi Airport"
+        },
+        {
+            "id": 7,
+            "code": "WAW",
+            "city": "Warsaw",
+            "country": "Poland",
+            "airport": "Warsaw Chopin Airport"
+        },
+        {
+            "id": 27,
+            "code": "CPH",
+            "city": "Copenhagen",
+            "country": "Denmark",
+            "airport": "Copenhagen Airport"
+        },
+        {
+            "id": 17,
+            "code": "DXB",
+            "city": "Dubai",
+            "country": "United Arab Emirates",
+            "airport": "Dubai International Airport"
+        },
+        {
+            "id": 10,
+            "code": "SCL",
+            "city": "Santiago",
+            "country": "Chile",
+            "airport": "Comodoro Arturo Merino Ben\u00edtez International Airport"
+        },
+        {
+            "id": 11,
+            "code": "OSL",
+            "city": "Oslo",
+            "country": "Norway",
+            "airport": "Oslo Airport"
+        },
+        {
+            "id": 39,
+            "code": "IST",
+            "city": "Istanbul",
+            "country": "Turkey",
+            "airport": "Istanbul Airport"
+        },
+        {
+            "id": 13,
+            "code": "AKL",
+            "city": "Auckland",
+            "country": "New Zealand",
+            "airport": "Auckland Airport"
+        },
+        {
+            "id": 30,
+            "code": "HND",
+            "city": "Tokyo",
+            "country": "Japan",
+            "airport": "Tokyo Haneda Airport"
+        },
+        {
+            "id": 45,
+            "code": "VIE",
+            "city": "Vienna",
+            "country": "Austria",
+            "airport": "Vienna International Airport"
+        },
+        {
+            "id": 50,
+            "code": "MIA",
+            "city": "Miami",
+            "country": "United States",
+            "airport": "Miami International Airport"
+        },
+        {
+            "id": 19,
+            "code": "MAD",
+            "city": "Madrid",
+            "country": "Spain",
+            "airport": "Adolfo Su\u00e1rez Madrid\u2013Barajas Airport"
+        },
+        {
+            "id": 20,
+            "code": "FRA",
+            "city": "Frankfurt",
+            "country": "Germany",
+            "airport": "Frankfurt Airport"
+        },
+        {
+            "id": 21,
+            "code": "CDG",
+            "city": "Paris",
+            "country": "France",
+            "airport": "Charles de Gaulle Airport"
+        },
+        {
+            "id": 22,
+            "code": "YYZ",
+            "city": "Toronto",
+            "country": "Canada",
+            "airport": "Toronto Pearson International Airport"
+        },
+        {
+            "id": 23,
+            "code": "LIM",
+            "city": "Lima",
+            "country": "Peru",
+            "airport": "Jorge Ch\u00e1vez International Airport"
+        },
+        {
+            "id": 96,
+            "code": "YUL",
+            "city": "Montreal",
+            "country": "Canada",
+            "airport": "Montr\u00e9al\u2013Trudeau International Airport"
+        },
+        {
+            "id": 46,
+            "code": "LHR",
+            "city": "London",
+            "country": "United Kingdom",
+            "airport": "Heathrow Airport"
+        },
+        {
+            "id": 28,
+            "code": "PEK",
+            "city": "Beijing",
+            "country": "China",
+            "airport": "Beijing Capital International Airport"
+        },
+        {
+            "id": 31,
+            "code": "HKG",
+            "city": "Hong Kong",
+            "country": "China",
+            "airport": "Hong Kong International Airport"
+        },
+        {
+            "id": 32,
+            "code": "BOS",
+            "city": "Boston",
+            "country": "United States",
+            "airport": "Logan International Airport"
+        },
+        {
+            "id": 36,
+            "code": "LCY",
+            "city": "London",
+            "country": "United Kingdom",
+            "airport": "London City Airport"
+        },
+        {
+            "id": 41,
+            "code": "EZE",
+            "city": "Buenos Aires",
+            "country": "Argentina",
+            "airport": "Ministro Pistarini International Airport"
+        },
+        {
+            "id": 38,
+            "code": "SFO",
+            "city": "San Francisco",
+            "country": "United States",
+            "airport": "San Francisco International Airport"
+        },
+        {
+            "id": 40,
+            "code": "SYD",
+            "city": "Sydney",
+            "country": "Australia",
+            "airport": "Sydney Kingsford Smith Airport"
+        },
+        {
+            "id": 42,
+            "code": "LHE",
+            "city": "Lahore",
+            "country": "Pakistan",
+            "airport": "Allama Iqbal International Airport"
+        },
+        {
+            "id": 43,
+            "code": "JFK",
+            "city": "New York",
+            "country": "United States",
+            "airport": "John F. Kennedy International Airport"
+        },
+        {
+            "id": 44,
+            "code": "MUC",
+            "city": "Munich",
+            "country": "Germany",
+            "airport": "Munich Airport"
+        },
+        {
+            "id": 49,
+            "code": "ZRH",
+            "city": "Zurich",
+            "country": "Switzerland",
+            "airport": "Zurich Airport"
+        },
+        {
+            "id": 65,
+            "code": "BWI",
+            "city": "Baltimore",
+            "country": "United States",
+            "airport": "Baltimore/Washington International Thurgood Marshall Airport"
+        },
+        {
+            "id": 79,
+            "code": "SDF",
+            "city": "Louisville",
+            "country": "United States",
+            "airport": "Louisville Muhammad Ali International Airport"
+        },
+        {
+            "id": 53,
+            "code": "BNA",
+            "city": "Nashville",
+            "country": "United States",
+            "airport": "Nashville International Airport"
+        },
+        {
+            "id": 54,
+            "code": "SAV",
+            "city": "Savannah",
+            "country": "United States",
+            "airport": "Savannah/Hilton Head International Airport"
+        },
+        {
+            "id": 72,
+            "code": "YEG",
+            "city": "Edmonton",
+            "country": "Canada",
+            "airport": "Edmonton International Airport"
+        },
+        {
+            "id": 93,
+            "code": "YQB",
+            "city": "Quebec City",
+            "country": "Canada",
+            "airport": "Quebec City Jean Lesage International Airport"
+        },
+        {
+            "id": 73,
+            "code": "YBR",
+            "city": "Brandon",
+            "country": "Canada",
+            "airport": "Brandon Municipal Airport"
+        },
+        {
+            "id": 98,
+            "code": "PHL",
+            "city": "Philadelphia",
+            "country": "United States",
+            "airport": "Philadelphia International Airport"
+        },
+        {
+            "id": 80,
+            "code": "OKC",
+            "city": "Oklahoma City",
+            "country": "United States",
+            "airport": "Will Rogers World Airport"
+        },
+        {
+            "id": 60,
+            "code": "BUF",
+            "city": "Buffalo",
+            "country": "United States",
+            "airport": "Buffalo Niagara International Airport"
+        },
+        {
+            "id": 61,
+            "code": "PIT",
+            "city": "Pittsburgh",
+            "country": "United States",
+            "airport": "Pittsburgh International Airport"
+        },
+        {
+            "id": 89,
+            "code": "TUL",
+            "city": "Tulsa",
+            "country": "United States",
+            "airport": "Tulsa International Airport"
+        },
+        {
+            "id": 100,
+            "code": "MKE",
+            "city": "Milwaukee",
+            "country": "United States",
+            "airport": "General Mitchell International Airport"
+        },
+        {
+            "id": 90,
+            "code": "YVR",
+            "city": "Vancouver",
+            "country": "Canada",
+            "airport": "Vancouver International Airport"
+        },
+        {
+            "id": 99,
+            "code": "MSY",
+            "city": "New Orleans",
+            "country": "United States",
+            "airport": "Louis Armstrong New Orleans International Airport"
+        },
+        {
+            "id": 82,
+            "code": "YZF",
+            "city": "Yellowknife",
+            "country": "Canada",
+            "airport": "Yellowknife Airport"
+        },
+        {
+            "id": 78,
+            "code": "YYC",
+            "city": "Calgary",
+            "country": "Canada",
+            "airport": "Calgary International Airport"
+        },
+        {
+            "id": 87,
+            "code": "YXX",
+            "city": "Abbotsford",
+            "country": "Canada",
+            "airport": "Abbotsford International Airport"
+        },
+        {
+            "id": 94,
+            "code": "YSJ",
+            "city": "Saint John",
+            "country": "Canada",
+            "airport": "Saint John Airport"
+        },
+        {
+            "id": 75,
+            "code": "CMH",
+            "city": "Columbus",
+            "country": "United States",
+            "airport": "John Glenn Columbus International Airport"
+        },
+        {
+            "id": 86,
+            "code": "RSW",
+            "city": "Fort Myers",
+            "country": "United States",
+            "airport": "Southwest Florida International Airport"
+        },
+        {
+            "id": 77,
+            "code": "YHZ",
+            "city": "Halifax",
+            "country": "Canada",
+            "airport": "Halifax Stanfield International Airport"
+        },
+        {
+            "id": 85,
+            "code": "MCI",
+            "city": "Kansas City",
+            "country": "United States",
+            "airport": "Kansas City International Airport"
+        },
+        {
+            "id": 95,
+            "code": "CLE",
+            "city": "Cleveland",
+            "country": "United States",
+            "airport": "Cleveland Hopkins International Airport"
+        },
+        {
+            "id": 84,
+            "code": "YFB",
+            "city": "Iqaluit",
+            "country": "Canada",
+            "airport": "Iqaluit Airport"
+        },
+        {
+            "id": 88,
+            "code": "RDU",
+            "city": "Raleigh",
+            "country": "United States",
+            "airport": "Raleigh-Durham International Airport"
+        },
+        {
+            "id": 97,
+            "code": "YQT",
+            "city": "Thunder Bay",
+            "country": "Canada",
+            "airport": "Thunder Bay International Airport"
+        }
+    ]
+}
