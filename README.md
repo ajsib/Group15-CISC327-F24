@@ -76,7 +76,7 @@ This README provides a comprehensive guide to set up the project on your local m
 Before you begin, ensure you have the following installed on your machine:
 - **Node.js 16+**: JavaScript runtime for the front-end (Next.js).
 - **pnpm**: Package manager for the front-end. Install via:
-  ```bash
+  ```
   npm install -g pnpm
   ```
 
@@ -84,21 +84,21 @@ Before you begin, ensure you have the following installed on your machine:
 
 #### 1. Clone the Repository
 First, clone the repository to your local machine:
-```bash
+```
 git clone https://github.com/ajsib/Group15-CISC327-F24.git
 cd project
 ```
 
 #### 2. Install Dependencies
 Navigate to the project directory and install all the required dependencies:
-```bash
+```
 cd src
 pnpm install
 ```
 
 #### 3. Run the Development Server
 To start the development server, run:
-```bash
+```
 pnpm dev
 ```
 The Next.js server should now be running on `http://localhost:3000/`.
@@ -107,7 +107,7 @@ The Next.js server should now be running on `http://localhost:3000/`.
 
 #### Running All Tests:
 To run the test suite and ensure everything works correctly, run:
-```bash
+```
 pnpm test
 ```
 
