@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mongo_dev_cisc_327:
+    image: mongo:4.2
+    restart: always
+    container_name: mongo_dev_cisc_327
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    command: mongod
+    networks:
+      - dev_net
+
+  backend:
+    image: my-registry/back_dev_cisc_327:latest
+    build:
+      context: ../server
+      dockerfile: Dockerfile.dev
+    container_name: back_dev_cisc_327
+    command: ["pnpm", "run", "dev"]
+    ports:
+      - "3001:3001"
+    volumes:
+      - ../back:/app:rw,z
+    environment:
+      DBCONNECTION: "mongodb://root:example@mongo_dev_cisc_327:27017/calwc-esc-db?authSource=admin"
+    depends_on:
+      - mongo_dev_cisc_327
+    networks:
+      - dev_net      
+
+  frontend:
+    image: my-registry/front_dev_cisc_327:latest
+    build:
+      context: ../src
+      dockerfile: Dockerfile.dev
+    container_name: front_dev_cisc_327
+    command: ["pnpm", "run", "dev"]
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../front:/app:rw,z
+    depends_on:
+      - backend
+      - mongo_dev_cisc_327
+    networks:
+      - dev_net
+
+networks:
+  dev_net:
+    driver: bridge
+
