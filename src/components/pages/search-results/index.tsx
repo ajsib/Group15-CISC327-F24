@@ -7,7 +7,18 @@ import DateTabs from './components/DateTabs';
 import FlightsList from './components/FlightsList';
 import LoadMoreButton from './components/LoadMoreButton';
 import FlightListSkeleton from './components/FlightListSkeleton';
-import { fetchFlights, Flight } from './service';
+import { searchFlights } from '@/services/flights';
+
+interface Flight {
+  id: number;
+  origin_id: number;
+  destination_id: number;
+  departureDate: string;
+  departureTime: string;
+  arrivalTime: string;
+  price: number;
+  connections: any[];
+}
 
 const FLIGHTS_PER_PAGE = 5; // Number of flights to load per batch
 
@@ -72,20 +83,33 @@ export default function FlightSearchResults({ query }: { query: any }) {
       setNewBatchLoading(true); // Show loading for new batch only
     }
 
-    const newFlights = await fetchFlights(query, selectedDate, reset ? 0 : offset, FLIGHTS_PER_PAGE);
-    
-    if (reset) {
-      setFlights(newFlights);
-      setOffset(newFlights.length);
-    } else {
-      setFlights((prev) => [...prev, ...newFlights]);
-      setOffset((prev) => prev + newFlights.length);
+    // Fetch flights using searchFlights from services
+    try {
+      const params = {
+        ...query,
+        departureDate: selectedDate,
+        page: reset ? 1 : offset / FLIGHTS_PER_PAGE + 1,
+      };
+      const response = await searchFlights(params);
+      const newFlights = response?.flights || [];
+
+      if (reset) {
+        setFlights(newFlights);
+        setOffset(newFlights.length);
+      } else {
+        setFlights((prev) => [...prev, ...newFlights]);
+        setOffset((prev) => prev + newFlights.length);
+      }
+
+      setHasMore(newFlights.length === FLIGHTS_PER_PAGE);
+      setNoFlights(newFlights.length === 0 && reset);
+    } catch (error) {
+      console.error('Failed to load flights:', error);
+      setNoFlights(true);
     }
 
-    setHasMore(newFlights.length === FLIGHTS_PER_PAGE);
     setInitialLoading(false);
     setNewBatchLoading(false);
-    setNoFlights(newFlights.length === 0 && reset);
   };
 
   useEffect(() => {

@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import { AirplaneTakeoff, AirplaneLanding } from 'phosphor-react';
 import { format } from 'date-fns';
+import { useEffect, useState } from 'react';
 import destinationsData from '@/public/dummy_data/destinations.json';
 
 interface InfoBannerProps {
@@ -10,18 +11,18 @@ interface InfoBannerProps {
 }
 
 const bannerContainerStyles = css`
-  padding: 40px; /* Generous padding for space */
-  color: var(--color-text); /* Text color adapted to mode */
+  padding: 40px;
+  color: var(--color-text);
   text-align: left;
   max-width: 800px;
-  margin: 0 auto 40px auto; /* Centered with space below */
-  background-color: transparent; /* Transparent background */
+  margin: 0 auto 40px auto;
+  background-color: transparent;
 `;
 
 const titleStyles = css`
   font-size: 36px;
   font-weight: bold;
-  color: var(--color-text); /* Text color adapted to mode */
+  color: var(--color-text);
   margin-bottom: 16px;
 `;
 
@@ -30,16 +31,16 @@ const flightDetailsStyles = css`
   justify-content: space-between;
   align-items: center;
   font-size: 18px;
-  color: var(--color-accent); /* Accent color for details */
+  color: var(--color-accent);
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid var(--color-border); /* Border color adapted to mode */
+  border-top: 1px solid var(--color-border);
 `;
 
 const flightTypeStyles = css`
-  font-size: 28px; /* Larger and bold for "Select Departing Flight" */
+  font-size: 28px;
   font-weight: bold;
-  color: var(--color-text); /* Text color adapted to mode */
+  color: var(--color-text);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -47,10 +48,9 @@ const flightTypeStyles = css`
 
 const dateTextStyles = css`
   font-size: 16px;
-  color: var(--color-accent); /* Accent color for date */
+  color: var(--color-accent);
 `;
 
-// Helper function to get city names from the destinations data
 const getCityNameByCode = (code: string) => {
   const destination = destinationsData.Destinations.find((dest) => dest.code === code);
   return destination ? destination.city : code;
@@ -60,12 +60,15 @@ export default function InfoBanner({ query, isReturn }: InfoBannerProps) {
   const Icon = isReturn ? AirplaneLanding : AirplaneTakeoff;
   const titleText = isReturn ? 'Select Return Flight' : 'Select Departing Flight';
 
-  // Get city names from codes
   const originCity = getCityNameByCode(query.origin_code);
   const destinationCity = getCityNameByCode(query.destination_code);
 
-  // Format the date into a full format like "Monday, October 23, 2024"
-  const formattedDate = format(new Date(query.departureDate), 'EEEE, MMMM do, yyyy');
+  const [formattedDate, setFormattedDate] = useState('');
+
+  useEffect(() => {
+    // Only format the date on the client side
+    setFormattedDate(format(new Date(query.departureDate), 'EEEE, MMMM do, yyyy'));
+  }, [query.departureDate]);
 
   return (
     <div css={bannerContainerStyles}>

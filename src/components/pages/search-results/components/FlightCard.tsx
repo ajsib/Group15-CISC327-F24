@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Flight } from '../service';
+import { Flight } from '../types';
 
 interface FlightCardProps {
   flight: Flight;

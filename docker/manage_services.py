@@ -10,8 +10,8 @@ else:
     import tty
 
 # List of container names for each deployment option
-DEV_CONTAINERS = ["mongo_dev_cisc_327", "back_dev_cisc_327", "mongo_dev_cisc_327"]
-PROD_CONTAINERS = ["front_prod_cisc_327", "back_prod_cisc_327", "mongo_prod_cisc_327"]
+DEV_CONTAINERS = ["front_dev_soft-qual-ass", "back_dev_soft-qual-ass", "mongo_dev_soft-qual-ass"]
+PROD_CONTAINERS = ["front_prod_soft-qual-ass", "back_prod_soft-qual-ass", "mongo_prod_soft-qual-ass"]
 
 def run_command(command, use_shell=False, capture_output=False):
     """Run a shell command and retry with sudo/admin if permission is denied."""
@@ -29,31 +29,32 @@ def run_command(command, use_shell=False, capture_output=False):
         else:
             raise e
 
-# def load_collection_into_mongo(container_name, collection_name, collection_file):
-#     """Load a single collection into MongoDB."""
-#     print(f"Copying {collection_file} to {container_name}...")
-#     run_command(["docker", "cp", collection_file, f"{container_name}:/{collection_name}.json"])
+def load_collection_into_mongo(container_name, collection_name, collection_file):
+    """Load a single collection into MongoDB."""
+    print(f"Copying {collection_file} to {container_name}...")
+    run_command(["docker", "cp", collection_file, f"{container_name}:/{collection_name}.json"])
 
-#     print(f"Importing {collection_name} into MongoDB in {container_name}...")
+    print(f"Importing {collection_name} into MongoDB in {container_name}...")
 
-#     # Adding MongoDB authentication parameters
-#     run_command([
-#         "docker", "exec", container_name,
-#         "mongoimport", "--db", "calwc-esc-db", "--collection", collection_name, 
-#         "--file", f"/{collection_name}.json", "--jsonArray",
-#         "--username", "root", "--password", "example", "--authenticationDatabase", "admin"
-#     ])
-#     print(f"{collection_name} imported successfully.")
+    # Adding MongoDB authentication parameters
+    run_command([
+        "docker", "exec", container_name,
+        "mongoimport", "--host", "mongo_dev_soft-qual-ass", "--port", "27018",
+        "--db", "soft-qual-ass", "--collection", collection_name, 
+        "--file", f"/{collection_name}.json", "--jsonArray",
+        "--username", "root", "--password", "example", "--authenticationDatabase", "admin"
+    ])
+    print(f"{collection_name} imported successfully.")
 
 
-# def load_all_dummy_data(container_name):
-#     """Load all collections into MongoDB."""
-#     dummy_data_dir = './dummy_data/'
-#     collections = ['users', 'caseFiles', 'campaigns', 'newsInfo', 'tasks', 'teams', 'TempStaff']
+def load_all_dummy_data(container_name):
+    """Load all collections into MongoDB."""
+    dummy_data_dir = './dummy_data/'
+    collections = ['destinations', 'flights']
     
-#     for collection in collections:
-#         collection_file = os.path.join(dummy_data_dir, f"{collection}.json")
-#         load_collection_into_mongo(container_name, collection, collection_file)
+    for collection in collections:
+        collection_file = os.path.join(dummy_data_dir, f"{collection}.json")
+        load_collection_into_mongo(container_name, collection, collection_file)
 
 def check_permissions():
     """Check if the user has the correct permissions to run Docker commands."""
@@ -99,7 +100,7 @@ def start_service(choice):
         print("Starting Dev + DB...\n")
         run_command(["docker-compose", "-f", "docker-compose.dev.yml", "up", "-d", "--remove-orphans"])
         # Load the dummy data into MongoDB after starting the Dev service
-        # load_all_dummy_data("mongo_dev")
+        load_all_dummy_data("mongo_dev_soft-qual-ass")
     # elif choice == '2':
     #     print("Starting Prod + DB...\n")
     #     run_command(["docker-compose", "-f", "docker-compose.prod.yml", "up", "-d", "--remove-orphans"])
@@ -212,9 +213,9 @@ def main_menu():
                 view_logs('1')
             elif "Prod" in current_deployment:
                 view_logs('2')
-        # elif option == '2':
-        #     if "Dev" in current_deployment:
-        #         shutdown_service('1')
+        elif option == '2':
+            if "Dev" in current_deployment:
+                shutdown_service('1')
         #     elif "Prod" in current_deployment:
         #         shutdown_service('2')
         elif option == '3':

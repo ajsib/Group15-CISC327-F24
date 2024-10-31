@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { AirplaneTakeoff, AirplaneLanding } from 'phosphor-react';
-import destinationsData from '@/public/dummy_data/destinations.json';
+import { getDestinations } from '@/services/destinations';
 
 interface Airport {
   id: number;
@@ -110,18 +110,31 @@ const airportNameStyles = css`
 export default function DropdownSelect({ type, value, onSelect }: DropdownSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState<Airport[]>([]); // Options loaded from API
   const [filteredOptions, setFilteredOptions] = useState<Airport[]>([]);
   const [selectedAirport, setSelectedAirport] = useState<Airport | null>(value);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
 
-  const options: Airport[] = destinationsData.Destinations;
-
   const buttonRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const icon =
-    type === 'origin' ? <AirplaneTakeoff size={32} /> : <AirplaneLanding size={32} />;
+  const icon = type === 'origin' ? <AirplaneTakeoff size={32} /> : <AirplaneLanding size={32} />;
   const placeholderText = type === 'origin' ? 'Origin' : 'Destination';
+
+  // Fetch destinations from the backend API on component mount
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        const destinations = await getDestinations();
+        setOptions(destinations); // Set options state with fetched destinations
+        setFilteredOptions(destinations); // Set filtered options initially
+      } catch (error) {
+        console.error('Failed to fetch destinations:', error);
+      }
+    };
+
+    fetchDestinations();
+  }, []);
 
   const handleButtonClick = () => {
     setIsOpen(true);
@@ -183,7 +196,7 @@ export default function DropdownSelect({ type, value, onSelect }: DropdownSelect
       <input
         type="text"
         css={searchInputStyles}
-        placeholder={`Search by airport name, city, or code`}
+        placeholder="Search by airport name, city, or code"
         value={inputValue}
         onChange={handleInputChange}
         autoFocus

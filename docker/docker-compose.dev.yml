@@ -1,55 +1,56 @@
 version: '3.8'
 
 services:
-  mongo_dev_cisc_327:
+  mongo_dev_soft-qual-ass:
     image: mongo:4.2
     restart: always
-    container_name: mongo_dev_cisc_327
+    container_name: mongo_dev_soft-qual-ass
     ports:
-      - "27017:27017"
+      - "20718:27018"  # Host port 20718 mapped to container port 27018
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    command: mongod
+    command: mongod --port 27018  # Setting MongoDB to listen on 27018 internally
     networks:
       - dev_net
 
   backend:
-    image: my-registry/back_dev_cisc_327:latest
+    image: my-registry/back_dev_soft-qual-ass:latest
     build:
       context: ../server
       dockerfile: Dockerfile.dev
-    container_name: back_dev_cisc_327
+    container_name: back_dev_soft-qual-ass
     command: ["pnpm", "run", "dev"]
     ports:
       - "3001:3001"
     volumes:
-      - ../back:/app:rw,z
+      - ../server:/app:rw,z
     environment:
-      DBCONNECTION: "mongodb://root:example@mongo_dev_cisc_327:27017/calwc-esc-db?authSource=admin"
+      DBCONNECTION: "mongodb://root:example@mongo_dev_soft-qual-ass:27018/soft-qual-ass?authSource=admin"
     depends_on:
-      - mongo_dev_cisc_327
+      - mongo_dev_soft-qual-ass
     networks:
       - dev_net      
 
   frontend:
-    image: my-registry/front_dev_cisc_327:latest
+    image: my-registry/front_dev_soft-qual-ass:latest
     build:
       context: ../src
       dockerfile: Dockerfile.dev
-    container_name: front_dev_cisc_327
+    container_name: front_dev_soft-qual-ass
     command: ["pnpm", "run", "dev"]
     ports:
       - "3000:3000"
     volumes:
-      - ../front:/app:rw,z
+      - ../src:/app:rw,z
+    environment:
+      - REACT_APP_API_BASE_URL=http://backend:3001/api
     depends_on:
       - backend
-      - mongo_dev_cisc_327
+      - mongo_dev_soft-qual-ass
     networks:
       - dev_net
 
 networks:
   dev_net:
     driver: bridge
-
