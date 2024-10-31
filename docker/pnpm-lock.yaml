@@ -1,0 +1,16 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      server:
+        specifier: link:server
+        version: link:server
+      src:
+        specifier: link:src
+        version: link:src
