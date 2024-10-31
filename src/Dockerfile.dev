@@ -16,11 +16,14 @@ COPY package.json pnpm-lock.yaml ./
 # Install dependencies
 RUN pnpm install
 
+# Verify that Next.js is installed
+RUN pnpm list next || (echo "Next.js is not installed!" && exit 1)
+
 # Copy the rest of the app
 COPY . .
 
 # Expose the port the app runs on
 EXPOSE 3000
 
-# Command to run the frontend (add this if necessary)
+# Command to run the frontend
 CMD ["pnpm", "run", "dev"]
