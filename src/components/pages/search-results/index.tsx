@@ -9,6 +9,7 @@ import LoadMoreButton from './components/LoadMoreButton';
 import FlightListSkeleton from './components/FlightListSkeleton';
 import { searchFlights } from '@/services/flights';
 import { Flight } from './types';
+import Footer from '@/components/shared/Footer';
 
 const FLIGHTS_PER_PAGE = 5; // Number of flights to load per batch
 
@@ -164,6 +165,7 @@ export default function FlightSearchResults({ query }: { query: any }) {
   };
 
   return (
+    <>
     <div>
       <InfoBanner query={query} isReturn={isReturn} />
       <DateTabs selectedDate={selectedDate} onDateChange={handleDateChange} />
@@ -190,5 +192,7 @@ export default function FlightSearchResults({ query }: { query: any }) {
         </>
       )}
     </div>
+    <Footer />
+    </>
   );
 }

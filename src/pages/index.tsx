@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import CTA from '../components/pages/landing/CTA';
 import Hero from '../components/pages/landing/Hero';
+import Footer from '@/components/shared/Footer';
 
 const containerStyles = css`
   position: relative;
@@ -21,11 +22,14 @@ const ctaContainerStyles = css`
 
 export default function HomePage() {
   return (
+    <>
     <div css={containerStyles}>
       <Hero />
       <div css={ctaContainerStyles}>
         <CTA />
       </div>
     </div>
+    {/* <Footer /> */}
+    </>
   );
 }
