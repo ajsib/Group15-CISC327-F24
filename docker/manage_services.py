@@ -98,8 +98,8 @@ def start_service(choice):
     """Start the selected service deployment."""
     if choice == '1':
         print("Starting Dev + DB...\n")
-        run_command(["pnpm", "install", "./src"])
-        run_command(["pnpm", "install", "./server"])
+        # run_command(["pnpm", "install", "./src"])
+        # run_command(["pnpm", "install", "./server"])
         run_command(["docker-compose", "-f", "docker-compose.dev.yml", "up", "-d", "--remove-orphans"])
         # Load the dummy data into MongoDB after starting the Dev service
         load_all_dummy_data("mongo_dev_soft-qual-ass")
