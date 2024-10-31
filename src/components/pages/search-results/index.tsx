@@ -8,17 +8,7 @@ import FlightsList from './components/FlightsList';
 import LoadMoreButton from './components/LoadMoreButton';
 import FlightListSkeleton from './components/FlightListSkeleton';
 import { searchFlights } from '@/services/flights';
-
-interface Flight {
-  id: number;
-  origin_id: number;
-  destination_id: number;
-  departureDate: string;
-  departureTime: string;
-  arrivalTime: string;
-  price: number;
-  connections: any[];
-}
+import { Flight } from './types';
 
 const FLIGHTS_PER_PAGE = 5; // Number of flights to load per batch
 
@@ -82,17 +72,25 @@ export default function FlightSearchResults({ query }: { query: any }) {
     } else {
       setNewBatchLoading(true); // Show loading for new batch only
     }
-
-    // Fetch flights using searchFlights from services
+  
     try {
       const params = {
         ...query,
+        origin_id: query.origin_id,
+        destination_id: query.destination_id,
         departureDate: selectedDate,
         page: reset ? 1 : offset / FLIGHTS_PER_PAGE + 1,
+        limit: FLIGHTS_PER_PAGE,
       };
-      const response = await searchFlights(params);
-      const newFlights = response?.flights || [];
-
+  
+      // Fetch flights with an added delay
+      const [response] = await Promise.all([
+        searchFlights(params),
+        delay(500), // Adjust delay (in milliseconds) as desired
+      ]);
+  
+      const newFlights = response.flights;
+  
       if (reset) {
         setFlights(newFlights);
         setOffset(newFlights.length);
@@ -100,17 +98,18 @@ export default function FlightSearchResults({ query }: { query: any }) {
         setFlights((prev) => [...prev, ...newFlights]);
         setOffset((prev) => prev + newFlights.length);
       }
-
-      setHasMore(newFlights.length === FLIGHTS_PER_PAGE);
+  
+      setHasMore(response.hasMore);
       setNoFlights(newFlights.length === 0 && reset);
     } catch (error) {
       console.error('Failed to load flights:', error);
       setNoFlights(true);
     }
-
+  
     setInitialLoading(false);
     setNewBatchLoading(false);
   };
+  
 
   useEffect(() => {
     // Reset flight list and reload when selected date or query changes
@@ -124,6 +123,8 @@ export default function FlightSearchResults({ query }: { query: any }) {
   const handleDateChange = (date: string) => {
     setSelectedDate(date); // Update selected date when user clicks on a different tab
   };
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   const handleFlightSelect = (flight: Flight) => {
     if (!query.oneWay) {

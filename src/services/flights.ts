@@ -9,6 +9,7 @@ interface SearchFlightsParams {
   children?: number;
   seniors?: number;
   page?: number;
+  limit?: number; 
 }
 
 // Function to search flights with query parameters
