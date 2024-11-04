@@ -1,0 +1,6 @@
+{
+	"dependencies": {
+		"server": "link:server",
+		"src": "link:src"
+	}
+}

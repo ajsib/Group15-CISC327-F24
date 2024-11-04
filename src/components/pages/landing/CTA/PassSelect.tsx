@@ -50,6 +50,7 @@ const counterStyles = css`
     background: none;
     border: none;
     cursor: pointer;
+    color: var(--color-text); /* Match icon color to text color */
   }
 
   span {
@@ -57,6 +58,7 @@ const counterStyles = css`
     text-align: center;
   }
 `;
+
 
 const closeButtonStyles = css`
   text-align: center;
@@ -77,7 +79,9 @@ export default function PassSelect({ value, onChange }: PassSelectProps) {
   const totalPassengers = value.adults + value.children + value.seniors;
 
   let label = '';
-  if (totalPassengers === 1) {
+  if (totalPassengers === 0) {
+    label = '0 Passengers';
+  } else if (totalPassengers === 1) {
     if (value.adults === 1) label = '1 Adult';
     else if (value.children === 1) label = '1 Child';
     else if (value.seniors === 1) label = '1 Senior';
@@ -125,10 +129,14 @@ export default function PassSelect({ value, onChange }: PassSelectProps) {
                 <span>{type}</span>
                 <div css={counterStyles}>
                   <button
+                    aria-label={`Decrease ${type}`}
                     onClick={() =>
                       onChange({
                         ...value,
-                        [type.toLowerCase()]: Math.max(0, value[type.toLowerCase() as keyof typeof value] - 1),
+                        [type.toLowerCase()]: Math.max(
+                          0,
+                          value[type.toLowerCase() as keyof typeof value] - 1
+                        ),
                       })
                     }
                   >
@@ -136,6 +144,7 @@ export default function PassSelect({ value, onChange }: PassSelectProps) {
                   </button>
                   <span>{value[type.toLowerCase() as keyof typeof value]}</span>
                   <button
+                    aria-label={`Increase ${type}`}
                     onClick={() =>
                       onChange({
                         ...value,

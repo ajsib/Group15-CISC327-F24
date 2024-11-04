@@ -3,8 +3,10 @@ import { css } from '@emotion/react';
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { AirplaneTakeoff, AirplaneLanding } from 'phosphor-react';
+import { getDestinations } from '@/services/destinations';
 
 interface Airport {
+  id: number;
   code: string;
   city: string;
   country: string;
@@ -13,8 +15,8 @@ interface Airport {
 
 interface DropdownSelectProps {
   type: 'origin' | 'destination';
-  value: string;
-  onSelect: (value: string) => void;
+  value: Airport | null;
+  onSelect: (value: Airport) => void;
 }
 
 const buttonStyles = css`
@@ -84,7 +86,8 @@ const dropdownItemStyles = css`
     border-bottom: none;
   }
 
-  &:hover, &.selected {
+  &:hover,
+  &.selected {
     background-color: var(--color-accent);
     color: var(--color-component-bg);
   }
@@ -107,22 +110,31 @@ const airportNameStyles = css`
 export default function DropdownSelect({ type, value, onSelect }: DropdownSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState<Airport[]>([]); // Options loaded from API
   const [filteredOptions, setFilteredOptions] = useState<Airport[]>([]);
-  const [selectedAirport, setSelectedAirport] = useState<Airport | null>(null);
+  const [selectedAirport, setSelectedAirport] = useState<Airport | null>(value);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
-
-  const options: Airport[] = [
-    { code: 'CDG', city: 'Paris', country: 'France', airport: 'Charles de Gaulle Airport' },
-    { code: 'LHR', city: 'London', country: 'United Kingdom', airport: 'Heathrow Airport' },
-    { code: 'JFK', city: 'New York', country: 'United States', airport: 'John F. Kennedy International Airport' },
-    // Add more airports as needed
-  ];
 
   const buttonRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const icon = type === 'origin' ? <AirplaneTakeoff size={32} /> : <AirplaneLanding size={32} />;
   const placeholderText = type === 'origin' ? 'Origin' : 'Destination';
+
+  // Fetch destinations from the backend API on component mount
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        const destinations = await getDestinations();
+        setOptions(destinations); // Set options state with fetched destinations
+        setFilteredOptions(destinations); // Set filtered options initially
+      } catch (error) {
+        console.error('Failed to fetch destinations:', error);
+      }
+    };
+
+    fetchDestinations();
+  }, []);
 
   const handleButtonClick = () => {
     setIsOpen(true);
@@ -142,26 +154,30 @@ export default function DropdownSelect({ type, value, onSelect }: DropdownSelect
     const input = e.target.value;
     setInputValue(input);
 
-    const filtered = options.filter((option) =>
-      option.city.toLowerCase().includes(input.toLowerCase()) ||
-      option.country.toLowerCase().includes(input.toLowerCase()) ||
-      option.airport.toLowerCase().includes(input.toLowerCase()) ||
-      option.code.toLowerCase().includes(input.toLowerCase())
+    const filtered = options.filter(
+      (option) =>
+        option.city.toLowerCase().includes(input.toLowerCase()) ||
+        option.country.toLowerCase().includes(input.toLowerCase()) ||
+        option.airport.toLowerCase().includes(input.toLowerCase()) ||
+        option.code.toLowerCase().includes(input.toLowerCase())
     );
     setFilteredOptions(filtered);
   };
 
   const handleSelect = (option: Airport) => {
     setSelectedAirport(option);
-    const displayValue = `${option.city} (${option.code})`;
-    onSelect(displayValue);
+    onSelect(option);
     setIsOpen(false);
   };
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        !buttonRef.current?.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -180,7 +196,7 @@ export default function DropdownSelect({ type, value, onSelect }: DropdownSelect
       <input
         type="text"
         css={searchInputStyles}
-        placeholder={`Search by airport name, city, or code`}
+        placeholder="Search by airport name, city, or code"
         value={inputValue}
         onChange={handleInputChange}
         autoFocus
@@ -189,13 +205,15 @@ export default function DropdownSelect({ type, value, onSelect }: DropdownSelect
       {filteredOptions.length > 0 ? (
         filteredOptions.map((option) => (
           <div
-            key={option.code}
+            key={option.id}
             css={dropdownItemStyles}
-            className={selectedAirport?.code === option.code ? 'selected' : ''}
+            className={selectedAirport?.id === option.id ? 'selected' : ''}
             onClick={() => handleSelect(option)}
           >
             <span css={airportCodeStyles}>{option.code}</span>
-            <span css={airportCityStyles}>{option.city}, {option.country}</span>
+            <span css={airportCityStyles}>
+              {option.city}, {option.country}
+            </span>
             <span css={airportNameStyles}>{option.airport}</span>
           </div>
         ))
@@ -209,7 +227,13 @@ export default function DropdownSelect({ type, value, onSelect }: DropdownSelect
     <div ref={buttonRef} css={buttonStyles}>
       <div css={mainTextStyles} onClick={handleButtonClick}>
         {icon}
-        <span>{selectedAirport ? `${selectedAirport.city} (${selectedAirport.code})` : <span css={mainTextStyleMuted}>{placeholderText}</span>}</span>
+        {selectedAirport ? (
+          <span>
+            {selectedAirport.city} ({selectedAirport.code})
+          </span>
+        ) : (
+          <span css={mainTextStyleMuted}>{placeholderText}</span>
+        )}
       </div>
       {selectedAirport ? (
         <div css={subtitleStyles}>{selectedAirport.airport}</div>
