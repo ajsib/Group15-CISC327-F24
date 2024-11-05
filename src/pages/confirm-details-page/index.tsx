@@ -1,5 +1,3 @@
-// src/pages/ConfirmDetailsPage.tsx
-
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useState } from 'react';
@@ -45,7 +43,7 @@ const buttonStyles = css`
   }
 `;
 
-export default function ConfirmDetailsPage() {
+export default function ConfirmDetailsPage({ initialData }: { initialData: any }) {
   const router = useRouter();
   const { origin_id, destination_id, departureDate, returnDate, adults, children, seniors } = router.query;
 
@@ -72,6 +70,9 @@ export default function ConfirmDetailsPage() {
   return (
     <div css={pageStyles}>
       <h1>Confirm Your Details</h1>
+
+      {/* Display any initial data fetched from backend */}
+      <p>Flight Details: {initialData?.flightInfo || "Not available"}</p>
 
       <div css={sectionStyles}>
         <label css={labelStyles}>Select Seat</label>
@@ -100,4 +101,19 @@ export default function ConfirmDetailsPage() {
       </button>
     </div>
   );
+}
+
+// Fetch data on the server-side
+export async function getServerSideProps(context: any) {
+  const { origin_id, destination_id, departureDate, returnDate } = context.query;
+  
+  // Fetch data from your backend API
+  const res = await fetch(`http://YOUR_BACKEND_API_URL/confirm-details?origin_id=${origin_id}&destination_id=${destination_id}&departureDate=${departureDate}&returnDate=${returnDate}`);
+  const initialData = await res.json();
+
+  return {
+    props: {
+      initialData, // Pass data to the component as props
+    },
+  };
 }
