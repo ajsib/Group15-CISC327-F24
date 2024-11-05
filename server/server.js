@@ -50,3 +50,5 @@ app.get('/health', async (req, res) => {
 app.get('/', (req, res) => {
   res.send('Express server is running!');
 });
+
+export default app;
