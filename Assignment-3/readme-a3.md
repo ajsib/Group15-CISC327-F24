@@ -1,3 +1,7 @@
+Understood. I'll provide the entire response as a markdown file with all text in normal format and no code segments.
+
+---
+
 # CISC327 Software Quality Assurance Fall 2024
 
 **Group 15: Aidan Sibley, Youssef Elmanawy, Will Wu**
@@ -8,51 +12,81 @@ Assignment 3
 
 ## Overview
 
-This project extends the **Flight Booking Application** with backend connectivity. In Assignment 3, we integrated a backend infrastructure using **Express** and **MongoDB**, hosted within a **Docker** container environment. The app now allows dynamic data handling and storage, enabling users to retrieve flight information stored in a MongoDB database, instead of relying on static JSON files. We also built out server-side connectivity to handle flight search queries.
+This project is an extension of the **Flight Booking Application** initially developed in Assignment 2. In Assignment 3, we introduced backend functionality using **Express** and **MongoDB**, with the entire application containerized through **Docker**. The main goal was to enable dynamic data handling from a MongoDB database, allowing the application to retrieve and store flight data from the backend. This approach moves away from static JSON data to a more robust and scalable solution.
 
-The backend server is implemented with **Express** and connects to **MongoDB** for data persistence. Docker is used to streamline the deployment process, ensuring that the development environment is consistent and easily reproducible.
+The backend infrastructure is built with **Express** as the server framework and **MongoDB** as the database. Docker is used to ensure consistent deployment across different environments.
 
 ## Features
 
-### 1. **Backend Integration with MongoDB**
-- The backend is implemented in **Express** and communicates with a MongoDB database hosted within a Docker container.
-- Flight data is stored in MongoDB, allowing for dynamic data retrieval and manipulation based on user queries.
+### 1. **Landing Page with Backend Integration**
+- The landing page maintains the structure from Assignment 2, with two main components:
+  - **Hero Section**: Displays the application’s branding and a tagline encouraging users to search for flights.
+  - **CTA Section**: Contains the search form where users select origin, destination, travel dates, and the number of passengers. The form submits a search request to the backend, which queries MongoDB to retrieve relevant flights.
 
-### 2. **Flight Search API Endpoint**
-- The backend provides an API endpoint for searching flights, which accepts parameters such as:
-  - **Origin ID and Destination ID**: To filter flights by location.
-  - **Departure Date**: To select flights for a specific date.
-- The API retrieves and returns filtered flights from the MongoDB database, supporting pagination to handle large datasets.
+### 2. **Backend Server with Express**
+- The Express server provides several key endpoints:
+  - **Flight Search Endpoint**: This endpoint processes user queries by filtering flights based on parameters such as origin, destination, and departure date. It connects to MongoDB to fetch real-time results based on these filters.
+  - **Pagination**: The backend supports pagination for search results, allowing the user to navigate through flight options in a structured manner. Pagination improves performance and enhances the user experience.
 
-### 3. **Frontend Integration**
-- The frontend search functionality has been extended to connect to the backend. When users search for flights, the frontend makes API requests to retrieve live data from MongoDB, enhancing the application's functionality with up-to-date flight information.
+### 3. **MongoDB Database Integration**
+- All flight data is stored in MongoDB collections, making it possible to retrieve and update data dynamically.
+- **Data Models**: Mongoose schemas are used to define the structure of the flight and destination data stored in MongoDB. This includes fields for origin, destination, departure date, and other relevant flight information.
+- **Data Population**: The backend populates each flight with additional details, such as origin and destination information, by cross-referencing related data in MongoDB.
 
-### 4. **Dockerized Development Environment**
-- The entire application (frontend, backend, and database) runs within Docker containers, providing a seamless and consistent development environment.
-- Docker Compose is used to manage multi-container Docker applications, orchestrating both the MongoDB and Express server.
+### 4. **Docker Containerization**
+- The entire application, including the backend server and MongoDB, is containerized with Docker. This setup simplifies deployment and ensures consistency across development, testing, and production environments.
+- Docker Compose is used to manage the multi-container setup, making it easy to start, stop, and configure the various components as a unified application.
 
 ## Key Files and Structure
 
-- **Backend Server**: The Express server is set up in the `server/` directory, with key files including:
-  - `server.js`: Main server entry point.
-  - `controllers/`: Contains controller logic for handling flight searches and database interaction.
-  - `routes/`: Defines API endpoints (e.g., `/search-results` for flight searches).
-  - `schemas/`: MongoDB schema definitions for flight data.
-  - `utils/dbConnection.js`: Handles connection logic to the MongoDB instance.
-- **Docker Configuration**:
-  - `Dockerfile.dev`: Sets up the development environment for the backend server.
-  - `docker-compose.dev.yml`: Configures and orchestrates multiple services (backend and MongoDB) in Docker.
+- **Express Server**: The main server file is located in `server.js`, where the Express application is initialized, middleware is configured, and routes are set up.
+- **Routes**: Backend endpoints are defined in the `routes` directory. For instance, `flight.js` handles all flight-related requests, such as searching for available flights.
+- **Controllers**: Logic for processing requests is organized in the `controllers` directory. The `flightController.js` file defines how the backend handles flight search queries, including the logic to retrieve matching results from MongoDB.
+- **Database Models**: Mongoose schemas are defined in the `schemas` directory, specifically in `Flight.js` and `Destination.js`, which define the data structure for flight and destination data, respectively.
+- **Docker Configuration**: The Docker setup is defined in `docker-compose.dev.yml` for development. This configuration file includes both the Express server and MongoDB services.
 
 ## Getting Started
 
 ### Prerequisites
-
-- **Node.js**
-- **PNPM** (or npm/yarn)
-- **Docker**
+To run this project, ensure you have Docker, Docker Compose, Node.js, and PNPM (or an alternative package manager like npm or yarn) installed on your system.
 
 ### Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
+1. Clone the repository to your local system.
+
+2. Navigate to the project directory.
+
+3. Install the necessary dependencies for both the frontend and backend using PNPM.
+
+4. Start the Docker containers by running the appropriate Docker Compose command, which will build and run the containers for both the backend server and the MongoDB database.
+
+5. Once the application is running, open your browser and navigate to the local server address to view the frontend. The backend server and database will also be accessible at the defined ports.
+
+## Usage
+
+1. **Flight Search**:
+   - On the landing page, users can fill out the search form with information like origin, destination, travel dates, and passenger details. When the form is submitted, it triggers a request to the backend server to fetch available flights that match the specified criteria.
+
+2. **Viewing Search Results**:
+   - After submitting the search form, the user is directed to the search results page, which displays matching flights retrieved from MongoDB. The results are paginated to allow easier navigation.
+
+3. **Confirming Flight Details**:
+   - After selecting a flight from the search results, users are taken to a page where they can confirm the details of their chosen flight. This page pulls additional data from MongoDB to provide up-to-date flight information.
+
+4. **Proceeding to Payment**:
+   - Once the flight details are confirmed, users can continue to the payment section. At this point, relevant flight data and user choices are saved, preparing the information for final processing.
+
+## Technologies Used
+
+- **Next.js**: A React framework for building the frontend.
+- **Express**: A web server framework for Node.js, used to build the backend server.
+- **MongoDB**: A NoSQL database for storing flight data.
+- **Mongoose**: An ODM (Object Data Modeling) library for MongoDB, used to define schemas and interact with the database.
+- **Docker**: A containerization tool that simplifies deployment and setup.
+- **Docker Compose**: A tool for defining and managing multi-container Docker applications, used here to manage both the backend server and MongoDB as services.
+
+## Key Benefits
+
+The integration of backend functionality with MongoDB and Express significantly enhances the application by allowing dynamic data handling, data persistence, and more complex query capabilities. Docker ensures that the application can be easily deployed and run consistently across different environments, which is essential for reliability in development, testing, and production stages.
+
+This setup improves the scalability of the application and prepares it for future expansions where additional backend functionalities or microservices could be added seamlessly.
