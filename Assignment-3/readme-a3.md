@@ -1,12 +1,8 @@
-Understood. I'll provide the entire response as a markdown file with all text in normal format and no code segments.
-
----
-
 # CISC327 Software Quality Assurance Fall 2024
 
 **Group 15: Aidan Sibley, Youssef Elmanawy, Will Wu**
 
-Assignment 3
+## Assignment 3
 
 # Flight Booking Application - Backend Connectivity
 
@@ -18,22 +14,22 @@ The backend infrastructure is built with **Express** as the server framework and
 
 ## Features
 
-### 1. **Landing Page with Backend Integration**
+### 1. Landing Page with Backend Integration
 - The landing page maintains the structure from Assignment 2, with two main components:
   - **Hero Section**: Displays the application’s branding and a tagline encouraging users to search for flights.
   - **CTA Section**: Contains the search form where users select origin, destination, travel dates, and the number of passengers. The form submits a search request to the backend, which queries MongoDB to retrieve relevant flights.
 
-### 2. **Backend Server with Express**
+### 2. Backend Server with Express
 - The Express server provides several key endpoints:
   - **Flight Search Endpoint**: This endpoint processes user queries by filtering flights based on parameters such as origin, destination, and departure date. It connects to MongoDB to fetch real-time results based on these filters.
   - **Pagination**: The backend supports pagination for search results, allowing the user to navigate through flight options in a structured manner. Pagination improves performance and enhances the user experience.
 
-### 3. **MongoDB Database Integration**
+### 3. MongoDB Database Integration
 - All flight data is stored in MongoDB collections, making it possible to retrieve and update data dynamically.
 - **Data Models**: Mongoose schemas are used to define the structure of the flight and destination data stored in MongoDB. This includes fields for origin, destination, departure date, and other relevant flight information.
 - **Data Population**: The backend populates each flight with additional details, such as origin and destination information, by cross-referencing related data in MongoDB.
 
-### 4. **Docker Containerization**
+### 4. Docker Containerization
 - The entire application, including the backend server and MongoDB, is containerized with Docker. This setup simplifies deployment and ensures consistency across development, testing, and production environments.
 - Docker Compose is used to manage the multi-container setup, making it easy to start, stop, and configure the various components as a unified application.
 
@@ -75,6 +71,20 @@ To run this project, ensure you have Docker, Docker Compose, Node.js, and PNPM (
 
 4. **Proceeding to Payment**:
    - Once the flight details are confirmed, users can continue to the payment section. At this point, relevant flight data and user choices are saved, preparing the information for final processing.
+
+## Running Tests
+
+### Babel Configuration
+This project uses Babel to support ES6+ syntax in Jest tests. Ensure Babel is properly set up in the `.babelrc` file, which allows Jest to understand modern JavaScript syntax.
+
+### Testing with PNPM
+To execute the tests, navigate to the `server` directory and use the following command:
+
+Run `pnpm test` in the `server` directory. This command sets the `NODE_ENV` to `test` and runs Jest, which will execute all the test cases located in the `__tests__` folder.
+
+Make sure your environment variables for testing, such as `MONGODB_URI`, are correctly set up to ensure a successful database connection during tests. If you encounter any errors, refer to the `.env.test` file (if used) to define environment-specific variables for the testing environment.
+
+These additional steps are necessary for setting up and executing tests in a consistent and isolated environment, ensuring your application behaves as expected in different scenarios.
 
 ## Technologies Used
 
