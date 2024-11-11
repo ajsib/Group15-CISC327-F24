@@ -3,6 +3,6 @@ import { getAllDestinations } from '../controllers/destinationController.js';
 
 const router = express.Router();
 
-router.get('/get-destinations', getAllDestinations);
+router.get('/', getAllDestinations); 
 
 export default router;

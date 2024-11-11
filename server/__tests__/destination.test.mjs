@@ -1,18 +1,27 @@
-// server/tests/destination.test.js
+import mongoose from 'mongoose';
 import request from 'supertest';
-import app from '../server'; // Make sure your server export is configured to be importable
+import app from '../server.js';
+import { expect } from 'chai';
 
 describe('Destination API', () => {
+  before(async () => {
+    await mongoose.connection.collection('destinations').deleteMany({});
+  });
+
   it('should fetch all destinations', async () => {
     const response = await request(app).get('/api/destinations');
-    expect(response.status).toBe(200);
-    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.status).to.equal(200);
+    expect(Array.isArray(response.body)).to.be.true;
   });
 
   it('should return an empty array if no destinations are found', async () => {
-    // Modify data or mock database if needed for an empty state test
     const response = await request(app).get('/api/destinations');
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual([]);
+    expect(response.status).to.equal(200);
+    expect(response.body).to.deep.equal([]);
   });
+});
+
+after(async () => {
+  await mongoose.connection.close();
+  process.exit();
 });
