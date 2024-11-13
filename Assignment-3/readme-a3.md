@@ -6,6 +6,21 @@
 
 # Flight Booking Application - Backend Connectivity
 
+
+
+## Testing Instructions
+
+clone repo 
+"cd src" in terminal 
+"pnpm install" in terminal to install dependencies
+"pnpm run dev" in terminal to run app
+"pnpm test" in termal to run tests
+
+## Dummy Data
+
+src/public/dummy_data/destinations.json for airport locations
+src/public/dummy_data/flights.json for flight informations
+
 ## Overview
 
 This project is an extension of the **Flight Booking Application** initially developed in Assignment 2. In Assignment 3, we introduced backend functionality using **Express** and **MongoDB**, with the entire application containerized through **Docker**. The main goal was to enable dynamic data handling from a MongoDB database, allowing the application to retrieve and store flight data from the backend. This approach moves away from static JSON data to a more robust and scalable solution.
