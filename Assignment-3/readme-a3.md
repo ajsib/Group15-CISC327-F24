@@ -10,11 +10,11 @@
 
 ## Testing Instructions
 
-clone repo 
-"cd src" in terminal 
-"pnpm install" in terminal to install dependencies
-"pnpm run dev" in terminal to run app
-"pnpm test" in termal to run tests
+1. clone repo 
+2. "cd src" in terminal to get to src files
+3. "pnpm install" in terminal to install dependencies
+4. "pnpm run dev" in terminal to run app..... "ctrl + C" in terminal to terminate app
+5. "pnpm test" in termal to run tests
 
 ## Dummy Data
 
