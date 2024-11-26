@@ -17,7 +17,7 @@ export const searchFlights = async (params: SearchFlightsParams) => {
   console.log('Initiating flight search with parameters:', params);
 
   try {
-    const response = await axiosInstance.get('/search-results', { params });
+    const response = await axiosInstance.get('flights/search-results', { params });
     console.log('Flight search successful. Response data:', response.data);
     return response.data; // Returns the flight search results
   } catch (error: any) {
