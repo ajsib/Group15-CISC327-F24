@@ -5,8 +5,10 @@
 	"scripts": {
 		"clean": "rm -rf coverage",
 		"test": "nyc mocha --reporter spec --exit server/__tests__/*.mjs",
-		"coverage": "nyc report --reporter=text --reporter=html"
-	},
+		"coverage": "nyc report --reporter=text --reporter=html",
+		"cypress:open": "cypress open",
+  		"dev": "node server.js"
+	}
 	"devDependencies": {
 		"chai": "^5.1.2",
 		"mocha": "^10.8.2",
